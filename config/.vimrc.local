@@ -1,0 +1,12 @@
+" Color column at position 80
+set colorcolumn=80
+
+" Color column with color id 8
+highlight ColorColumn ctermbg=8
+
+" Text wrapping
+set wrap
+set textwidth=0
+
+" Color theme monokai
+color monokai

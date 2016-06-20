@@ -1,0 +1,7 @@
+# SSH files config
+
+# GitHub
+host github.com
+  HostName github.com
+  IdentityFile ~/.ssh/ssh_file_name_for_github
+  User git
