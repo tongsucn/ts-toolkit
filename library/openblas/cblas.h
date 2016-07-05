@@ -395,9 +395,10 @@ cblas_dzasum(
  */
 
 /**
- * @brief Get index of maximum element of a vector with single precision.
+ * @brief Get index of element with maximum absolute value in a vector with
+ * single precision.
  *
- * @details $result = \arg\max_{i}{x_{i}}$
+ * @details $result = \arg\max_{i}{|x_{i}|}$
  *
  * @param[in] N     Size of vector.
  * @param[in] X     Input vector, single precision.
@@ -415,9 +416,10 @@ cblas_isamax(
 
 
 /**
- * @brief Get index of maximum element of a vector with double precision.
+ * @brief Get index of element with maximum absolute value in a vector with
+ * double precision.
  *
- * @details $result = \arg\max_{i}{x_{i}}$
+ * @details $result = \arg\max_{i}{|x_{i}|}$
  *
  * @param[in] N     Size of vector.
  * @param[in] X     Input vector, double precision.
@@ -435,10 +437,11 @@ cblas_idamax(
 
 
 /**
- * @brief Get index of maximum element of a vector with single complex
- * precision.
+ * @brief Get index of element with maximum absolute value in a vector with
+ * single complex precision.
  *
- * @details $result = \arg\max_{i}{x_{i}}$
+ * @details $result = \arg\max_{n}{|x_{n}| + |y_{n}|}$, where $x_{n}$ is the
+ * $n$-th real part of vector $X$ and $y$ is the imaginary part.
  *
  * @param[in] N     Size of vector.
  * @param[in] X     Input vector, single complex precision.
@@ -456,13 +459,14 @@ cblas_icamax(
 
 
 /**
- * @brief Get index of maximum element of a vector with double complex
- * precision.
+ * @brief Get index of element with maximum absolute value in a vector with
+ * double complex precision.
  *
- * @details $result = \arg\max_{i}{x_{i}}$
+ * @details $result = \arg\max_{n}{|x_{n}| + |y_{n}|}$, where $x_{n}$ is the
+ * $n$-th real part of vector $X$ and $y$ is the imaginary part.
  *
  * @param[in] N     Size of vector.
- * @param[in] X     Input vector, single precision.
+ * @param[in] X     Input vector, double complex precision.
  * @param[in] incX  Stride within input vector when computing.
  *
  * @return Index.
@@ -486,33 +490,262 @@ cblas_izamax(
 /*
  * Routines with standard 4 prefixes (s, d, c, z)
  */
-void cblas_sswap(const int N, float *X, const int incX,
-                 float *Y, const int incY);
-void cblas_scopy(const int N, const float *X, const int incX,
-                 float *Y, const int incY);
-void cblas_saxpy(const int N, const float alpha, const float *X,
-                 const int incX, float *Y, const int incY);
 
-void cblas_dswap(const int N, double *X, const int incX,
-                 double *Y, const int incY);
-void cblas_dcopy(const int N, const double *X, const int incX,
-                 double *Y, const int incY);
-void cblas_daxpy(const int N, const double alpha, const double *X,
-                 const int incX, double *Y, const int incY);
 
-void cblas_cswap(const int N, void *X, const int incX,
-                 void *Y, const int incY);
-void cblas_ccopy(const int N, const void *X, const int incX,
-                 void *Y, const int incY);
-void cblas_caxpy(const int N, const void *alpha, const void *X,
-                 const int incX, void *Y, const int incY);
+/**
+ * @brief Swap two vectors with single precision.
+ *
+ * @param[in]       N     Size of vector.
+ * @param[in,out]   X     Input vector 1, single precision.
+ * @param[in]       incX  Stride within input vector 1 when computing.
+ * @param[in,out]   Y     Input vector 2, single precision.
+ * @param[in]       incY  Stride within input vector 2 when computing.
+ *
+ */
+void
+cblas_sswap(
+        const int   N,
+        float       *X,
+        const int   incX,
+        float       *Y,
+        const int   incY
+        );
 
-void cblas_zswap(const int N, void *X, const int incX,
-                 void *Y, const int incY);
-void cblas_zcopy(const int N, const void *X, const int incX,
-                 void *Y, const int incY);
-void cblas_zaxpy(const int N, const void *alpha, const void *X,
-                 const int incX, void *Y, const int incY);
+
+/**
+ * @brief Copy the content of a vector with single precision to another.
+ *
+ * @param[in]   N     Size of vector.
+ * @param[in]   X     Input vector, single precision.
+ * @param[in]   incX  Stride within input vector when computing.
+ * @param[out]  Y     Output vector, single precision.
+ * @param[in]   incY  Stride within output vector when computing.
+ *
+ */
+void
+cblas_scopy(
+        const int   N,
+        const float *X,
+        const int   incX,
+        float       *Y,
+        const int   incY
+        );
+
+
+/**
+ * @brief Constant times a vector plus a vector, with single precision.
+ *
+ * @details $result = \alpha \cdot X + Y$
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Alpha to be added, single precision.
+ * @param[in]       X       Input vector, single precision.
+ * @param[in]       incX    Stride within input vector when computing.
+ * @param[in,out]   Y       Output vector, single precision.
+ * @param[in]       incY    Stride within output vector when computing.
+ *
+ */
+void
+cblas_saxpy(
+        const int   N,
+        const float alpha,
+        const float *X,
+        const int   incX,
+        float       *Y,
+        const int   incY
+        );
+
+
+/**
+ * @brief Swap two vectors with double precision.
+ *
+ * @param[in]       N     Size of vector.
+ * @param[in,out]   X     Input vector 1, double precision.
+ * @param[in]       incX  Stride within input vector 1 when computing.
+ * @param[in,out]   Y     Input vector 2, double precision.
+ * @param[in]       incY  Stride within input vector 2 when computing.
+ *
+ */
+void
+cblas_dswap(
+        const int   N,
+        double      *X,
+        const int   incX,
+        double      *Y,
+        const int   incY
+        );
+
+
+/**
+ * @brief Copy the content of a vector with double precision to another.
+ *
+ * @param[in]   N     Size of vector.
+ * @param[in]   X     Input vector, double precision.
+ * @param[in]   incX  Stride within input vector when computing.
+ * @param[out]  Y     Output vector, double precision.
+ * @param[in]   incY  Stride within output vector when computing.
+ *
+ */
+void
+cblas_dcopy(
+        const int       N,
+        const double    *X,
+        const int       incX,
+        double          *Y,
+        const int       incY
+        );
+
+
+/**
+ * @brief Constant times a vector plus a vector, with double precision.
+ *
+ * @details $result = \alpha \cdot X + Y$
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Alpha to be added, double precision.
+ * @param[in]       X       Input vector, double precision.
+ * @param[in]       incX    Stride within input vector when computing.
+ * @param[in,out]   Y       Output vector, double precision.
+ * @param[in]       incY    Stride within output vector when computing.
+ *
+ */
+void
+cblas_daxpy(
+        const int       N,
+        const double    alpha,
+        const double    *X,
+        const int       incX,
+        double          *Y,
+        const int       incY
+        );
+
+
+/**
+ * @brief Swap two vectors with single complex precision.
+ *
+ * @param[in]       N     Size of vector.
+ * @param[in,out]   X     Input vector 1, single complex precision.
+ * @param[in]       incX  Stride within input vector 1 when computing.
+ * @param[in,out]   Y     Input vector 2, single complex precision.
+ * @param[in]       incY  Stride within input vector 2 when computing.
+ *
+ */
+void
+cblas_cswap(
+        const int   N,
+        void        *X,
+        const int   incX,
+        void        *Y,
+        const int   incY
+        );
+
+
+/**
+ * @brief Copy the content of a vector with single complex precision to another.
+ *
+ * @param[in]   N     Size of vector.
+ * @param[in]   X     Input vector, single complex precision.
+ * @param[in]   incX  Stride within input vector when computing.
+ * @param[out]  Y     Output vector, single complex precision.
+ * @param[in]   incY  Stride within output vector when computing.
+ *
+ */
+void
+cblas_ccopy(
+        const int   N,
+        const void  *X,
+        const int   incX,
+        void        *Y,
+        const int   incY
+        );
+
+
+/**
+ * @brief Constant times a vector plus a vector, with single complex precision.
+ *
+ * @details $result = \alpha \cdot X + Y$
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Alpha to be added, single complex precision.
+ * @param[in]       X       Input vector, single complex precision.
+ * @param[in]       incX    Stride within input vector when computing.
+ * @param[in,out]   Y       Output vector, single complex precision.
+ * @param[in]       incY    Stride within output vector when computing.
+ *
+ */
+void
+cblas_caxpy(
+        const int   N,
+        const void  *alpha,
+        const void  *X,
+        const int   incX,
+        void        *Y,
+        const int   incY
+        );
+
+
+/**
+ * @brief Swap two vectors with double complex precision.
+ *
+ * @param[in]       N     Size of vector.
+ * @param[in,out]   X     Input vector 1, double complex precision.
+ * @param[in]       incX  Stride within input vector 1 when computing.
+ * @param[in,out]   Y     Input vector 2, double complex precision.
+ * @param[in]       incY  Stride within input vector 2 when computing.
+ *
+ */
+void
+cblas_zswap(
+        const int   N,
+        void        *X,
+        const int   incX,
+        void        *Y,
+        const int   incY
+        );
+
+
+/**
+ * @brief Copy the content of a vector with double complex precision to another.
+ *
+ * @param[in]   N     Size of vector.
+ * @param[in]   X     Input vector, double complex precision.
+ * @param[in]   incX  Stride within input vector when computing.
+ * @param[out]  Y     Output vector, double complex precision.
+ * @param[in]   incY  Stride within output vector when computing.
+ *
+ */
+void
+cblas_zcopy(
+        const int   N,
+        const void  *X,
+        const int   incX,
+        void        *Y,
+        const int   incY
+        );
+
+
+/**
+ * @brief Constant times a vector plus a vector, with double complex precision.
+ *
+ * @details $result = \alpha \cdot X + Y$
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Alpha to be added, double complex precision.
+ * @param[in]       X       Input vector, double complex precision.
+ * @param[in]       incX    Stride within input vector when computing.
+ * @param[in,out]   Y       Output vector, double complex precision.
+ * @param[in]       incY    Stride within output vector when computing.
+ *
+ */
+void
+cblas_zaxpy(
+        const int   N,
+        const void  *alpha,
+        const void  *X,
+        const int   incX,
+        void        *Y,
+        const int   incY
+        );
 
 
 /*
@@ -536,12 +769,132 @@ void cblas_drotm(const int N, double *X, const int incX,
 /*
  * Routines with S D C Z CS and ZD prefixes
  */
-void cblas_sscal(const int N, const float alpha, float *X, const int incX);
-void cblas_dscal(const int N, const double alpha, double *X, const int incX);
-void cblas_cscal(const int N, const void *alpha, void *X, const int incX);
-void cblas_zscal(const int N, const void *alpha, void *X, const int incX);
-void cblas_csscal(const int N, const float alpha, void *X, const int incX);
-void cblas_zdscal(const int N, const double alpha, void *X, const int incX);
+
+
+/**
+ * @brief Rescale a vector with single precision.
+ *
+ * @details $result = \alpha \cdot X$
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Scale factor, single precision.
+ * @param[in,out]   X       Input vector, single precision.
+ * @param[in]       incX    Stride within input vector when computing.
+ *
+ */
+void
+cblas_sscal(
+        const int   N,
+        const float alpha,
+        float       *X,
+        const int   incX
+        );
+
+
+/**
+ * @brief Rescale a vector with double precision.
+ *
+ * @details $result = \alpha \cdot X$
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Scale factor, double precision.
+ * @param[in,out]   X       Input vector, double precision.
+ * @param[in]       incX    Stride within input vector when computing.
+ *
+ */
+void
+cblas_dscal(
+        const int       N,
+        const double    alpha,
+        double          *X,
+        const int       incX
+        );
+
+
+/**
+ * @brief Rescale a vector with single complex precision.
+ *
+ * @details $result = \alpha \cdot X$
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Scale factor, single complex precision.
+ * @param[in,out]   X       Input vector, single complex precision.
+ * @param[in]       incX    Stride within input vector when computing.
+ *
+ */
+void
+cblas_cscal(
+        const int   N,
+        const void  *alpha,
+        void        *X,
+        const int   incX
+        );
+
+
+/**
+ * @brief Rescale a vector with double complex precision.
+ *
+ * @details $result = \alpha \cdot X$
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Scale factor, double complex precision.
+ * @param[in,out]   X       Input vector, double complex precision.
+ * @param[in]       incX    Stride within input vector when computing.
+ *
+ */
+void
+cblas_zscal(
+        const int   N,
+        const void  *alpha,
+        void        *X,
+        const int   incX
+        );
+
+
+/**
+ * @brief Rescale and reduce a single complex vector.
+ *
+ * @details $result = \alpha \cdot x_{n} + (0.0 * y)i$, where $x_{n}$ is the
+ * real part of the $n$-th element of vector $X$, $y$ is the imaginary part.
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Scale factor, single complex precision.
+ * @param[in,out]   X       Input vector, single complex precision (But
+ * the result's imaginary parts are 0).
+ * @param[in]       incX    Stride within input vector when computing.
+ *
+ */
+void
+cblas_csscal(
+        const int   N,
+        const float alpha,
+        void        *X,
+        const int   incX
+        );
+
+
+/**
+ * @brief Rescale and reduce a double complex vector.
+ *
+ * @details $result = \alpha \cdot x_{n} + (0.0 * y)i$, where $x_{n}$ is the
+ * real part of the $n$-th element of vector $X$, $y$ is the imaginary part.
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Scale factor, double complex precision.
+ * @param[in,out]   X       Input vector, double complex precision (But
+ * the result's imaginary parts are 0).
+ * @param[in]       incX    Stride within input vector when computing.
+ *
+ */
+void
+cblas_zdscal(
+        const int       N,
+        const double    alpha,
+        void            *X,
+        const int       incX
+        );
+
+
 
 /*
  * ===========================================================================
