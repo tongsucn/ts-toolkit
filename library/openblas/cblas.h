@@ -1174,120 +1174,408 @@ void cblas_zhpr2(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo, const
 /*
  * Routines with standard 4 prefixes (S, D, C, Z)
  */
-void cblas_sgemm(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_TRANSPOSE TransB, const int M, const int N,
-                 const int K, const float alpha, const float *A,
-                 const int lda, const float *B, const int ldb,
-                 const float beta, float *C, const int ldc);
+
+
+/**
+ * @brief General Matrix-Matrix multiplication, single precision.
+ *
+ * @details $result = \alpha \cdot op(A) \cdot op(B) + \beta \cdot C$, where
+ * $op(X) = X$ or $X^{T}$.
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA and TransB) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CBlasTrans or CBlasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       TransB  Transpose flag for matrix B. When CblasNoTrans is
+ * set, $op(B) = B$. When CBlasTrans or CBlasConjTrans is set, $op(B) = B^{T}$.
+ *
+ * @param[in]       M       Number of rows in $op(A)$ and matrix C. It must be
+ * at least 0.
+ *
+ * @param[in]       N       Number of columns in $op(B)$ and matrix C. It must
+ * be at least 0.
+ *
+ * @param[in]       K       Number of columns in $op(A)$, and the number of rows
+ * in $op(B)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale for the first matrix, single precision.
+ * @param[in]       A       Input matrix A, single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, single precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, single precision.
+ * @param[in,out]   C       Result matrix, single precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_sgemm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_TRANSPOSE  TransB,
+        const int                   M,
+        const int                   N,
+        const int                   K,
+        const float                 alpha,
+        const float                 *A,
+        const int                   lda,
+        const float                 *B,
+        const int                   ldb,
+        const float                 beta,
+        float                       *C,
+        const int                   ldc
+        );
+
+
 void cblas_ssymm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const int M, const int N,
                  const float alpha, const float *A, const int lda,
                  const float *B, const int ldb, const float beta,
                  float *C, const int ldc);
+
+
 void cblas_ssyrk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
                  const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
                  const float alpha, const float *A, const int lda,
                  const float beta, float *C, const int ldc);
+
+
 void cblas_ssyr2k(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
                   const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
                   const float alpha, const float *A, const int lda,
                   const float *B, const int ldb, const float beta,
                   float *C, const int ldc);
+
+
 void cblas_strmm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
                  const enum CBLAS_DIAG Diag, const int M, const int N,
                  const float alpha, const float *A, const int lda,
                  float *B, const int ldb);
+
+
 void cblas_strsm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
                  const enum CBLAS_DIAG Diag, const int M, const int N,
                  const float alpha, const float *A, const int lda,
                  float *B, const int ldb);
 
-void cblas_dgemm(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_TRANSPOSE TransB, const int M, const int N,
-                 const int K, const double alpha, const double *A,
-                 const int lda, const double *B, const int ldb,
-                 const double beta, double *C, const int ldc);
+
+/**
+ * @brief General Matrix-Matrix multiplication, double precision.
+ *
+ * @details $result = \alpha \cdot op(A) \cdot op(B) + \beta \cdot C$, where
+ * $op(X) = X$ or $X^{T}$.
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA and TransB) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CBlasTrans or CBlasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       TransB  Transpose flag for matrix B. When CblasNoTrans is
+ * set, $op(B) = B$. When CBlasTrans or CBlasConjTrans is set, $op(B) = B^{T}$.
+ *
+ * @param[in]       M       Number of rows in $op(A)$ and matrix C. It must be
+ * at least 0.
+ *
+ * @param[in]       N       Number of columns in $op(B)$ and matrix C. It must
+ * be at least 0.
+ *
+ * @param[in]       K       Number of columns in $op(A)$, and the number of rows
+ * in $op(B)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale for the first matrix, double precision.
+ * @param[in]       A       Input matrix A, double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, double precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, double precision.
+ * @param[in,out]   C       Result matrix, double precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_dgemm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_TRANSPOSE  TransB,
+        const int                   M,
+        const int                   N,
+        const int                   K,
+        const double                alpha,
+        const double                *A,
+        const int                   lda,
+        const double                *B,
+        const int                   ldb,
+        const double                beta,
+        double                      *C,
+        const int                   ldc
+        );
+
+
 void cblas_dsymm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const int M, const int N,
                  const double alpha, const double *A, const int lda,
                  const double *B, const int ldb, const double beta,
                  double *C, const int ldc);
+
+
 void cblas_dsyrk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
                  const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
                  const double alpha, const double *A, const int lda,
                  const double beta, double *C, const int ldc);
+
+
 void cblas_dsyr2k(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
                   const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
                   const double alpha, const double *A, const int lda,
                   const double *B, const int ldb, const double beta,
                   double *C, const int ldc);
+
+
 void cblas_dtrmm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
                  const enum CBLAS_DIAG Diag, const int M, const int N,
                  const double alpha, const double *A, const int lda,
                  double *B, const int ldb);
+
+
 void cblas_dtrsm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
                  const enum CBLAS_DIAG Diag, const int M, const int N,
                  const double alpha, const double *A, const int lda,
                  double *B, const int ldb);
 
-void cblas_cgemm(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_TRANSPOSE TransB, const int M, const int N,
-                 const int K, const void *alpha, const void *A,
-                 const int lda, const void *B, const int ldb,
-                 const void *beta, void *C, const int ldc);
+
+/**
+ * @brief General Matrix-Matrix multiplication, single complex precision.
+ *
+ * @details $result = \alpha \cdot op(A) \cdot op(B) + \beta \cdot C$, where
+ * $op(X) = X$ or $X^{T}$.
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA and TransB) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CBlasTrans is set, $op(A) = A^{T}$. When
+ * CBlasConjTrans is set, $op(A) = A^{*}$, the conjugating transpose.
+ *
+ * @param[in]       TransB  Transpose flag for matrix B. When CblasNoTrans is
+ * set, $op(B) = B$. When CBlasTrans is set, $op(B) = B^{T}$. When
+ * CBlasConjTrans is set, $op(B) = B^{*}$, the conjugating transpose.
+ *
+ * @param[in]       M       Number of rows in $op(A)$ and matrix C. It must be
+ * at least 0.
+ *
+ * @param[in]       N       Number of columns in $op(B)$ and matrix C. It must
+ * be at least 0.
+ *
+ * @param[in]       K       Number of columns in $op(A)$, and the number of rows
+ * in $op(B)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale for the first matrix, single complex
+ * precision. To be noticed is that, this parameter is a pointer pointing to a
+ * single complex number, unlike in cblas_sgemm and cblas_dgemm.
+ *
+ * @param[in]       A       Input matrix A, single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, single complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, single complex precision. To
+ * be noticed is that, this parameter is a pointer pointing to a single complex
+ * number, unlike in cblas_sgemm and cblas_dgemm.
+ *
+ * @param[in,out]   C       Result matrix, single complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_cgemm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_TRANSPOSE  TransB,
+        const int                   M,
+        const int                   N,
+        const int                   K,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *B,
+        const int                   ldb,
+        const void                  *beta,
+        void                        *C,
+        const int                   ldc
+        );
+
+
 void cblas_csymm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const int M, const int N,
                  const void *alpha, const void *A, const int lda,
                  const void *B, const int ldb, const void *beta,
                  void *C, const int ldc);
+
+
 void cblas_csyrk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
                  const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
                  const void *alpha, const void *A, const int lda,
                  const void *beta, void *C, const int ldc);
+
+
 void cblas_csyr2k(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
                   const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
                   const void *alpha, const void *A, const int lda,
                   const void *B, const int ldb, const void *beta,
                   void *C, const int ldc);
+
+
 void cblas_ctrmm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
                  const enum CBLAS_DIAG Diag, const int M, const int N,
                  const void *alpha, const void *A, const int lda,
                  void *B, const int ldb);
+
+
 void cblas_ctrsm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
                  const enum CBLAS_DIAG Diag, const int M, const int N,
                  const void *alpha, const void *A, const int lda,
                  void *B, const int ldb);
 
-void cblas_zgemm(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_TRANSPOSE TransB, const int M, const int N,
-                 const int K, const void *alpha, const void *A,
-                 const int lda, const void *B, const int ldb,
-                 const void *beta, void *C, const int ldc);
+
+/**
+ * @brief General Matrix-Matrix multiplication, double complex precision.
+ *
+ * @details $result = \alpha \cdot op(A) \cdot op(B) + \beta \cdot C$, where
+ * $op(X) = X$ or $X^{T}$.
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA and TransB) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CBlasTrans is set, $op(A) = A^{T}$. When
+ * CBlasConjTrans is set, $op(A) = A^{*}$, the conjugating transpose.
+ *
+ * @param[in]       TransB  Transpose flag for matrix B. When CblasNoTrans is
+ * set, $op(B) = B$. When CBlasTrans is set, $op(B) = B^{T}$. When
+ * CBlasConjTrans is set, $op(B) = B^{*}$, the conjugating transpose.
+ * @param[in]       M       Number of rows in $op(A)$ and matrix C. It must be
+ * at least 0.
+ *
+ * @param[in]       N       Number of columns in $op(B)$ and matrix C. It must
+ * be at least 0.
+ *
+ * @param[in]       K       Number of columns in $op(A)$, and the number of rows
+ * in $op(B)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale for the first matrix, double complex
+ * precision. To be noticed is that, this parameter is a pointer pointing to a
+ * double complex number, unlike in cblas_sgemm and cblas_dgemm.
+ *
+ * @param[in]       A       Input matrix A, double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, double complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, double complex precision. To
+ * be noticed is that, this parameter is a pointer pointing to a double complex
+ * number, unlike in cblas_sgemm and cblas_dgemm.
+ *
+ * @param[in,out]   C       Result matrix, double complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_zgemm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_TRANSPOSE  TransB,
+        const int                   M,
+        const int                   N,
+        const int                   K,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *B,
+        const int                   ldb,
+        const void                  *beta,
+        void                        *C,
+        const int                   ldc
+        );
+
+
 void cblas_zsymm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const int M, const int N,
                  const void *alpha, const void *A, const int lda,
                  const void *B, const int ldb, const void *beta,
                  void *C, const int ldc);
+
+
 void cblas_zsyrk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
                  const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
                  const void *alpha, const void *A, const int lda,
                  const void *beta, void *C, const int ldc);
+
+
 void cblas_zsyr2k(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
                   const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
                   const void *alpha, const void *A, const int lda,
                   const void *B, const int ldb, const void *beta,
                   void *C, const int ldc);
+
+
 void cblas_ztrmm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
                  const enum CBLAS_DIAG Diag, const int M, const int N,
                  const void *alpha, const void *A, const int lda,
                  void *B, const int ldb);
+
+
 void cblas_ztrsm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
                  const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
                  const enum CBLAS_DIAG Diag, const int M, const int N,
