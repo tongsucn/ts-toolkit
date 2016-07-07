@@ -751,6 +751,19 @@ cblas_zaxpy(
 /*
  * Routines with S and D prefix only
  */
+
+
+/**
+ * @brief Rescale a vector with single precision.
+ *
+ * @details $result = \alpha \cdot X$
+ *
+ * @param[in]       N       Size of vector.
+ * @param[in]       alpha   Scale factor, single precision.
+ * @param[in,out]   X       Input vector, single precision.
+ * @param[in]       incX    Stride within input vector when computing.
+ *
+ */
 void cblas_srotg(float *a, float *b, float *c, float *s);
 void cblas_srotmg(float *d1, float *d2, float *b1, const float b2, float *P);
 void cblas_srot(const int N, float *X, const int incX,
@@ -1253,9 +1266,7 @@ cblas_sgemm(
  *
  * @param[in]       Order   The dimension, in which the elements are continuous
  * in memory. When the elements within a row are continuous in memory, then
- * CblasRowMajor should be set, and vice versa. It is used to describe the
- * memory layout of the input matrix, which means the transpose parameters
- * (TransA and TransB) has nothing to do with the major order.
+ * CblasRowMajor should be set, and vice versa.
  *
  * @param[in]       Side    Specify the side of $op(A)$ relative to $op(B)$
  * when computing.
@@ -1308,31 +1319,243 @@ cblas_ssymm(
         );
 
 
-void cblas_ssyrk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                 const float alpha, const float *A, const int lda,
-                 const float beta, float *C, const int ldc);
+/**
+ * @brief Perform a rank-k matrix-matrix operation for a symmetric matrix with
+ * a general matrix. Single precision.
+ *
+ * @details $C = \alpha \cdot A \cdot A^{T} + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{T} \cdot A + \beta \cdot C$,
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A. When CblasNoTrans is
+ * set, $C = \alpha \cdot A \cdot A^{T} + \beta \cdot C$. When CblasTrans or
+ * CblasConjTrans is set $C = \alpha \cdot A^{T} \cdot A + \beta \codt C$.
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale for matrix A, single precision.
+ * @param[in]       A       Input matrix A, single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, single precision.
+ * @param[in,out]   C       Result matrix, single precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_ssyrk(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const float                 alpha,
+        const float                 *A,
+        const int                   lda,
+        const float                 beta,
+        float                       *C,
+        const int                   ldc
+        );
 
 
-void cblas_ssyr2k(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                  const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                  const float alpha, const float *A, const int lda,
-                  const float *B, const int ldb, const float beta,
-                  float *C, const int ldc);
+/**
+ * @brief Perform a rank-2 matrix-matrix operation for a symmetric matrix with
+ * two general matrix. Single precision.
+ *
+ * @details $C = \alpha \cdot A \cdot B^{T} + \alpha \cdot B \cdot A^{T}
+ * + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{T} \cdot B + \alpha \cdot B^{T} \cdot A + \beta \cdot C$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A.
+ * When CblasNoTrans is set,
+ * $C = \alpha \cdot A \cdot B^{T} + \alpha \cdot B \cdot A^{T} + \beta \cdot C$
+ * When CblasConjTrans is set,
+ * $C = \alpha \cdot A^{T} \cdot B + \alpha \cdot B^{T} \cdot A + \beta \cdot C$
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale, single precision.
+ * @param[in]       A       Input matrix A, single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, single precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, single precision.
+ * @param[in,out]   C       Result matrix, single precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_ssyr2k(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const float                 alpha,
+        const float                 *A,
+        const int                   lda,
+        const float                 *B,
+        const int                   ldb,
+        const float                 beta,
+        float                       *C,
+        const int                   ldc
+        );
 
 
-void cblas_strmm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_DIAG Diag, const int M, const int N,
-                 const float alpha, const float *A, const int lda,
-                 float *B, const int ldb);
+/**
+ * @brief Matrix-matrix product with one triangular matrix, single precision.
+ *
+ * @details $B = \alpha \cdot op(A) \cdot B$
+ *
+ * or
+ *
+ * $B = \alpha \cdot B \cdot op(A)$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Side    Specify the side of $op(A)$ relative to B.
+ * @param[in]       Uplo    Specify whether the matrix A is upper triangular or
+ * lower triangular.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A.
+ * When CblasNoTrans is set, $op(A) = A$. When CblasTrans or CblasConjTrans is
+ * set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       M       The number of rows of matrix B. It must be at least
+ * zero.
+ *
+ * @param[in]       N       The number of column of matrix B. It must be at
+ * least zero.
+ *
+ * @param[in]       alpha   Scale, single precision.
+ * @param[in]       A       Input matrix A, single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   B       Input and result matrix B, single precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_strmm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_SIDE       Side,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   M,
+        const int                   N,
+        const float                 alpha,
+        const float                 *A,
+        const int                   lda,
+        float                       *B,
+        const int                   ldb
+        );
 
 
-void cblas_strsm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_DIAG Diag, const int M, const int N,
-                 const float alpha, const float *A, const int lda,
-                 float *B, const int ldb);
+/**
+ * @brief This function is used to solve the X in the following equation,
+ * single precision.
+ *
+ * @details $op(A) \cdot X = \alpha \cdot B$
+ *
+ * or
+ *
+ * $X \cdot op(A) = \alpha \cdot B$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA and TransB) has nothing to do with the major order.
+ *
+ * @param[in]       Side    Specify the side of $op(A)$ relative to X.
+ * @param[in]       Uplo    Specify whether the matrix A is upper triangular or
+ * lower triangular.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A.
+ * When CblasNoTrans is set, $op(A) = A$. When CblasTrans or CblasConjTrans is
+ * set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       M       The number of rows of matrix B. It must be at least
+ * zero.
+ *
+ * @param[in]       N       The number of column of matrix B. It must be at
+ * least zero.
+ *
+ * @param[in]       alpha   Scale, single precision.
+ * @param[in]       A       Input matrix A, single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   B       Input and result matrix B, single precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_strsm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_SIDE       Side,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   M,
+        const int                   N,
+        const float                 alpha,
+        const float                 *A,
+        const int                   lda,
+        float                       *B,
+        const int                   ldb
+        );
 
 
 /**
@@ -1412,9 +1635,7 @@ cblas_dgemm(
  *
  * @param[in]       Order   The dimension, in which the elements are continuous
  * in memory. When the elements within a row are continuous in memory, then
- * CblasRowMajor should be set, and vice versa. It is used to describe the
- * memory layout of the input matrix, which means the transpose parameters
- * (TransA and TransB) has nothing to do with the major order.
+ * CblasRowMajor should be set, and vice versa.
  *
  * @param[in]       Side    Specify the side of $op(A)$ relative to $op(B)$
  * when computing.
@@ -1467,31 +1688,241 @@ cblas_dsymm(
         );
 
 
-void cblas_dsyrk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                 const double alpha, const double *A, const int lda,
-                 const double beta, double *C, const int ldc);
+/**
+ * @brief Perform a rank-k matrix-matrix operation for a symmetric matrix with
+ * a general matrix. Double precision.
+ *
+ * @details $C = \alpha \cdot A \cdot A^{T} + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{T} \cdot A + \beta \cdot C$,
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A. When CblasNoTrans is
+ * set, $C = \alpha \cdot A \cdot A^{T} + \beta \cdot C$. When CblasTrans or
+ * CblasConjTrans is set $C = \alpha \cdot A^{T} \cdot A + \beta \codt C$.
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale for matrix A, double precision.
+ * @param[in]       A       Input matrix A, double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, double precision.
+ * @param[in,out]   C       Result matrix, double precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_dsyrk(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const double                alpha,
+        const double                *A,
+        const int                   lda,
+        const double                beta,
+        double                      *C,
+        const int                   ldc
+        );
 
 
-void cblas_dsyr2k(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                  const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                  const double alpha, const double *A, const int lda,
-                  const double *B, const int ldb, const double beta,
-                  double *C, const int ldc);
+/**
+ * @brief Perform a rank-2 matrix-matrix operation for a symmetric matrix with
+ * two general matrix. Double precision.
+ *
+ * @details $C = \alpha \cdot A \cdot B^{T} + \alpha \cdot B \cdot A^{T}
+ * + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{T} \cdot B + \alpha \cdot B^{T} \cdot A + \beta \cdot C$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A.
+ * When CblasNoTrans is set,
+ * $C = \alpha \cdot A \cdot B^{T} + \alpha \cdot B \cdot A^{T} + \beta \cdot C$
+ * When CblasConjTrans is set,
+ * $C = \alpha \cdot A^{T} \cdot B + \alpha \cdot B^{T} \cdot A + \beta \cdot C$
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale, double precision.
+ * @param[in]       A       Input matrix A, double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, double precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, double precision.
+ * @param[in,out]   C       Result matrix, double precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_dsyr2k(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const double                alpha,
+        const double                *A,
+        const int                   lda,
+        const double                *B,
+        const int                   ldb,
+        const double                beta,
+        double                      *C,
+        const int                   ldc
+        );
 
 
-void cblas_dtrmm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_DIAG Diag, const int M, const int N,
-                 const double alpha, const double *A, const int lda,
-                 double *B, const int ldb);
+/**
+ * @brief Matrix-matrix product with one triangular matrix, double precision.
+ *
+ * @details $B = \alpha \cdot op(A) \cdot B$
+ *
+ * or
+ *
+ * $B = \alpha \cdot B \cdot op(A)$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Side    Specify the side of $op(A)$ relative to B.
+ * @param[in]       Uplo    Specify whether the matrix A is upper triangular or
+ * lower triangular.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A.
+ * When CblasNoTrans is set, $op(A) = A$. When CblasTrans or CblasConjTrans is
+ * set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       M       The number of rows of matrix B. It must be at least
+ * zero.
+ *
+ * @param[in]       N       The number of column of matrix B. It must be at
+ * least zero.
+ *
+ * @param[in]       alpha   Scale, double precision.
+ * @param[in]       A       Input matrix A, double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   B       Input and result matrix B, double precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_dtrmm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_SIDE       Side,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   M,
+        const int                   N,
+        const double                alpha,
+        const double                *A,
+        const int                   lda,
+        double                      *B,
+        const int                   ldb
+        );
 
 
-void cblas_dtrsm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_DIAG Diag, const int M, const int N,
-                 const double alpha, const double *A, const int lda,
-                 double *B, const int ldb);
+/**
+ * @brief This function is used to solve the X in the following equation,
+ * double precision.
+ *
+ * @details $op(A) \cdot X = \alpha \cdot B$
+ *
+ * or
+ *
+ * $X \cdot op(A) = \alpha \cdot B$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Side    Specify the side of $op(A)$ relative to X.
+ * @param[in]       Uplo    Specify whether the matrix A is upper triangular or
+ * lower triangular.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A.
+ * When CblasNoTrans is set, $op(A) = A$. When CblasTrans or CblasConjTrans is
+ * set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       M       The number of rows of matrix B. It must be at least
+ * zero.
+ *
+ * @param[in]       N       The number of column of matrix B. It must be at
+ * least zero.
+ *
+ * @param[in]       alpha   Scale, double precision.
+ * @param[in]       A       Input matrix A, double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   B       Input and result matrix B, double precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_dtrsm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_SIDE       Side,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   M,
+        const int                   N,
+        const double                alpha,
+        const double                *A,
+        const int                   lda,
+        double                      *B,
+        const int                   ldb
+        );
 
 
 /**
@@ -1579,9 +2010,7 @@ cblas_cgemm(
  *
  * @param[in]       Order   The dimension, in which the elements are continuous
  * in memory. When the elements within a row are continuous in memory, then
- * CblasRowMajor should be set, and vice versa. It is used to describe the
- * memory layout of the input matrix, which means the transpose parameters
- * (TransA and TransB) has nothing to do with the major order.
+ * CblasRowMajor should be set, and vice versa.
  *
  * @param[in]       Side    Specify the side of $op(A)$ relative to $op(B)$
  * when computing.
@@ -1640,31 +2069,242 @@ cblas_csymm(
         );
 
 
-void cblas_csyrk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                 const void *alpha, const void *A, const int lda,
-                 const void *beta, void *C, const int ldc);
+/**
+ * @brief Perform a rank-k matrix-matrix operation for a symmetric matrix with
+ * a general matrix. Single complex precision.
+ *
+ * @details $C = \alpha \cdot A \cdot A^{T} + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{T} \cdot A + \beta \cdot C$,
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A. When CblasNoTrans is
+ * set, $C = \alpha \cdot A \cdot A^{T} + \beta \cdot C$. When CblasTrans or
+ * CblasConjTrans is set $C = \alpha \cdot A^{T} \cdot A + \beta \codt C$.
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale for matrix A, single complex precision.
+ * @param[in]       A       Input matrix A, single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, single complex precision.
+ * @param[in,out]   C       Result matrix, single complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_csyrk(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *beta,
+        void                        *C,
+        const int                   ldc
+        );
 
 
-void cblas_csyr2k(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                  const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                  const void *alpha, const void *A, const int lda,
-                  const void *B, const int ldb, const void *beta,
-                  void *C, const int ldc);
+/**
+ * @brief Perform a rank-2 matrix-matrix operation for a symmetric matrix with
+ * two general matrix. Single complex precision.
+ *
+ * @details $C = \alpha \cdot A \cdot B^{T} + \alpha \cdot B \cdot A^{T}
+ * + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{T} \cdot B + \alpha \cdot B^{T} \cdot A + \beta \cdot C$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A.
+ * When CblasNoTrans is set,
+ * $C = \alpha \cdot A \cdot B^{T} + \alpha \cdot B \cdot A^{T} + \beta \cdot C$
+ * When CblasConjTrans is set,
+ * $C = \alpha \cdot A^{T} \cdot B + \alpha \cdot B^{T} \cdot A + \beta \cdot C$
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale, single complex precision.
+ * @param[in]       A       Input matrix A, single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, single complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, single complex precision.
+ * @param[in,out]   C       Result matrix, single complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_csyr2k(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *B,
+        const int                   ldb,
+        const void                  *beta,
+        void                        *C,
+        const int                   ldc
+        );
 
 
-void cblas_ctrmm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_DIAG Diag, const int M, const int N,
-                 const void *alpha, const void *A, const int lda,
-                 void *B, const int ldb);
+/**
+ * @brief Matrix-matrix product with one triangular matrix, single complex
+ * precision.
+ *
+ * @details $B = \alpha \cdot op(A) \cdot B$
+ *
+ * or
+ *
+ * $B = \alpha \cdot B \cdot op(A)$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Side    Specify the side of $op(A)$ relative to B.
+ * @param[in]       Uplo    Specify whether the matrix A is upper triangular or
+ * lower triangular.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A.
+ * When CblasNoTrans is set, $op(A) = A$. When CblasTrans is set,
+ * $op(A) = A^{T}$. When CblasConjTrans is set, $op(A) = A^{*}$
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       M       The number of rows of matrix B. It must be at least
+ * zero.
+ *
+ * @param[in]       N       The number of column of matrix B. It must be at
+ * least zero.
+ *
+ * @param[in]       alpha   Scale, single complex precision.
+ * @param[in]       A       Input matrix A, single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   B       Input and result matrix B, single complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_ctrmm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_SIDE       Side,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   M,
+        const int                   N,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        void                        *B,
+        const int                   ldb
+        );
 
 
-void cblas_ctrsm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_DIAG Diag, const int M, const int N,
-                 const void *alpha, const void *A, const int lda,
-                 void *B, const int ldb);
+/**
+ * @brief This function is used to solve the X in the following equation,
+ * single complex precision.
+ *
+ * @details $op(A) \cdot X = \alpha \cdot B$
+ *
+ * or
+ *
+ * $X \cdot op(A) = \alpha \cdot B$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Side    Specify the side of $op(A)$ relative to X.
+ * @param[in]       Uplo    Specify whether the matrix A is upper triangular or
+ * lower triangular.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A.
+ * When CblasNoTrans is set, $op(A) = A$. When CblasTrans is set,
+ * $op(A) = A^{T}$. When CblasConjTrans is set, $op(A) = A^{*}$
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       M       The number of rows of matrix B. It must be at least
+ * zero.
+ *
+ * @param[in]       N       The number of column of matrix B. It must be at
+ * least zero.
+ *
+ * @param[in]       alpha   Scale, single complex precision.
+ * @param[in]       A       Input matrix A, single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   B       Input and result matrix B, single complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_ctrsm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_SIDE       Side,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   M,
+        const int                   N,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        void                        *B,
+        const int                   ldb
+        );
 
 
 /**
@@ -1751,9 +2391,7 @@ cblas_zgemm(
  *
  * @param[in]       Order   The dimension, in which the elements are continuous
  * in memory. When the elements within a row are continuous in memory, then
- * CblasRowMajor should be set, and vice versa. It is used to describe the
- * memory layout of the input matrix, which means the transpose parameters
- * (TransA and TransB) has nothing to do with the major order.
+ * CblasRowMajor should be set, and vice versa.
  *
  * @param[in]       Side    Specify the side of $op(A)$ relative to $op(B)$
  * when computing.
@@ -1794,74 +2432,649 @@ cblas_zgemm(
  * parameter Order.
  *
  */
-void cblas_zsymm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const int M, const int N,
-                 const void *alpha, const void *A, const int lda,
-                 const void *B, const int ldb, const void *beta,
-                 void *C, const int ldc);
+void
+cblas_zsymm(
+        const enum CBLAS_ORDER  Order,
+        const enum CBLAS_SIDE   Side,
+        const enum CBLAS_UPLO   Uplo,
+        const int               M,
+        const int               N,
+        const void              *alpha,
+        const void              *A,
+        const int               lda,
+        const void              *B,
+        const int               ldb,
+        const void              *beta,
+        void                    *C,
+        const int               ldc
+        );
 
 
-void cblas_zsyrk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                 const void *alpha, const void *A, const int lda,
-                 const void *beta, void *C, const int ldc);
+/**
+ * @brief Perform a rank-k matrix-matrix operation for a symmetric matrix with
+ * a general matrix. Double complex precision.
+ *
+ * @details $C = \alpha \cdot A \cdot A^{T} + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{T} \cdot A + \beta \cdot C$,
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A. When CblasNoTrans is
+ * set, $C = \alpha \cdot A \cdot A^{T} + \beta \cdot C$. When CblasTrans or
+ * CblasConjTrans is set $C = \alpha \cdot A^{T} \cdot A + \beta \codt C$.
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale for matrix A, double complex precision.
+ * @param[in]       A       Input matrix A, double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, double complex precision.
+ * @param[in,out]   C       Result matrix, double complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_zsyrk(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *beta,
+        void                        *C,
+        const int                   ldc
+        );
 
 
-void cblas_zsyr2k(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                  const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                  const void *alpha, const void *A, const int lda,
-                  const void *B, const int ldb, const void *beta,
-                  void *C, const int ldc);
+/**
+ * @brief Perform a rank-2 matrix-matrix operation for a symmetric matrix with
+ * two general matrix. Double complex precision.
+ *
+ * @details $C = \alpha \cdot A \cdot B^{T} + \alpha \cdot B \cdot A^{T}
+ * + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{T} \cdot B + \alpha \cdot B^{T} \cdot A + \beta \cdot C$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A.
+ * When CblasNoTrans is set,
+ * $C = \alpha \cdot A \cdot B^{T} + \alpha \cdot B \cdot A^{T} + \beta \cdot C$
+ * When CblasConjTrans is set,
+ * $C = \alpha \cdot A^{T} \cdot B + \alpha \cdot B^{T} \cdot A + \beta \cdot C$
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale, double complex precision.
+ * @param[in]       A       Input matrix A, double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, double complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, double complex precision.
+ * @param[in,out]   C       Result matrix, double complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_zsyr2k(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *B,
+        const int                   ldb,
+        const void                  *beta,
+        void                        *C,
+        const int                   ldc
+        );
 
 
-void cblas_ztrmm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_DIAG Diag, const int M, const int N,
-                 const void *alpha, const void *A, const int lda,
-                 void *B, const int ldb);
+/**
+ * @brief Matrix-matrix product with one triangular matrix, double complex
+ * precision.
+ *
+ * @details $B = \alpha \cdot op(A) \cdot B$
+ *
+ * or
+ *
+ * $B = \alpha \cdot B \cdot op(A)$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Side    Specify the side of $op(A)$ relative to B.
+ * @param[in]       Uplo    Specify whether the matrix A is upper triangular or
+ * lower triangular.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A.
+ * When CblasNoTrans is set, $op(A) = A$. When CblasTrans is set,
+ * $op(A) = A^{T}$. When CblasConjTrans is set, $op(A) = A^{*}$
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       M       The number of rows of matrix B. It must be at least
+ * zero.
+ *
+ * @param[in]       N       The number of column of matrix B. It must be at
+ * least zero.
+ *
+ * @param[in]       alpha   Scale, double complex precision.
+ * @param[in]       A       Input matrix A, double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   B       Input and result matrix B, double complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_ztrmm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_SIDE       Side,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   M,
+        const int                   N,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        void                        *B,
+        const int                   ldb
+        );
 
 
-void cblas_ztrsm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE TransA,
-                 const enum CBLAS_DIAG Diag, const int M, const int N,
-                 const void *alpha, const void *A, const int lda,
-                 void *B, const int ldb);
+/**
+ * @brief This function is used to solve the X in the following equation,
+ * double complex precision.
+ *
+ * @details $op(A) \cdot X = \alpha \cdot B$
+ *
+ * or
+ *
+ * $X \cdot op(A) = \alpha \cdot B$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Side    Specify the side of $op(A)$ relative to X.
+ * @param[in]       Uplo    Specify whether the matrix A is upper triangular or
+ * lower triangular.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A.
+ * When CblasNoTrans is set, $op(A) = A$. When CblasTrans is set,
+ * $op(A) = A^{T}$. When CblasConjTrans is set, $op(A) = A^{*}$
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       M       The number of rows of matrix B. It must be at least
+ * zero.
+ *
+ * @param[in]       N       The number of column of matrix B. It must be at
+ * least zero.
+ *
+ * @param[in]       alpha   Scale, double complex precision.
+ * @param[in]       A       Input matrix A, double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   B       Input and result matrix B, double complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_ztrsm(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_SIDE       Side,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   M,
+        const int                   N,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        void                        *B,
+        const int                   ldb
+        );
 
 
 /*
  * Routines with prefixes C and Z only
  */
-void cblas_chemm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const int M, const int N,
-                 const void *alpha, const void *A, const int lda,
-                 const void *B, const int ldb, const void *beta,
-                 void *C, const int ldc);
-void cblas_cherk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                 const float alpha, const void *A, const int lda,
-                 const float beta, void *C, const int ldc);
-void cblas_cher2k(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                  const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                  const void *alpha, const void *A, const int lda,
-                  const void *B, const int ldb, const float beta,
-                  void *C, const int ldc);
 
-void cblas_zhemm(const enum CBLAS_ORDER Order, const enum CBLAS_SIDE Side,
-                 const enum CBLAS_UPLO Uplo, const int M, const int N,
-                 const void *alpha, const void *A, const int lda,
-                 const void *B, const int ldb, const void *beta,
-                 void *C, const int ldc);
-void cblas_zherk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                 const double alpha, const void *A, const int lda,
-                 const double beta, void *C, const int ldc);
-void cblas_zher2k(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo,
-                  const enum CBLAS_TRANSPOSE Trans, const int N, const int K,
-                  const void *alpha, const void *A, const int lda,
-                  const void *B, const int ldb, const double beta,
-                  void *C, const int ldc);
 
-void cblas_xerbla(int p, const char *rout, const char *form, ...);
+/**
+ * @brief This function computes scalar-matrix-matrix product using a Hermitian
+ * matrix A and a general matrix B and add the result to a scalar-matrix product
+ * using a general matrix C. Single complex precision.
+ *
+ * @details $C = \alhpa \cdot A \cdot B + \beta \cdot C$
+ *
+ * or
+ *
+ * $C = \alhpa \cdot B \cdot A + \beta \cdot C$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Side    Specify the side of A relative to B.
+ * @param[in]       Uplo    Specify which triangular part of matrix A should be
+ * used. When CblasUpper is set, the upper part of Hermitian matrix A is used.
+ * When CblasLower is set, the lower part of Hermitian matrix A is used.
+ *
+ * @param[in]       M       The number of rows of matrix C. It must be at least
+ * zero.
+ *
+ * @param[in]       N       The number of column of matrix C. It must be at
+ * least zero.
+ *
+ * @param[in]       alpha   Scale, single complex precision.
+ * @param[in]       A       Hermitian matrix A, single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, single complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, single complex precision.
+ * @param[in,out]   C       Result matrix, single complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_chemm(
+        const enum CBLAS_ORDER  Order,
+        const enum CBLAS_SIDE   Side,
+        const enum CBLAS_UPLO   Uplo,
+        const int               M,
+        const int               N,
+        const void              *alpha,
+        const void              *A,
+        const int               lda,
+        const void              *B,
+        const int               ldb,
+        const void              *beta,
+        void                    *C,
+        const int               ldc
+        );
+
+
+/**
+ * @brief Perform a rank-k matrix-matrix operation using a general matrix A with
+ * a Hermitian matrix C. Single complex precision.
+ *
+ * @details $C = \alpha \cdot A \cdot A^{*} + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{*} \cdot A + \beta \cdot C$,
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A. When CblasNoTrans is
+ * set, $C = \alpha \cdot A \cdot A^{*} + \beta \cdot C$. When CblasTrans or
+ * CblasConjTrans is set $C = \alpha \cdot A^{*} \cdot A + \beta \codt C$.
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale for matrix A, single complex precision.
+ * @param[in]       A       Input matrix A, single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, single complex precision.
+ * @param[in,out]   C       Result Hermitian matrix, single complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_cherk(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const float                 alpha,
+        const void                  *A,
+        const int                   lda,
+        const float                 beta,
+        void                        *C,
+        const int                   ldc
+        );
+
+
+/**
+ * @brief Perform a rank-2 matrix-matrix operation using general matrices A and
+ * B and a Hermitian matrix C. Double complex precision.
+ *
+ * @details $C = \alpha \cdot A \cdot B^{*} + \bar{\alpha} \cdot B \cdot A^{*}
+ * + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{*} \cdot B + \bar{\alpha} \cdot B^{*} \cdot A
+ * + \beta \cdot C$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A.
+ * When CblasNoTrans is set,
+ * $C = \alpha \cdot A \cdot B^{*} + \alpha \cdot B \cdot A^{*} + \beta \cdot C$
+ * When CblasConjTrans is set,
+ * $C = \alpha \cdot A^{*} \cdot B + \alpha \cdot B^{*} \cdot A + \beta \cdot C$
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale, single complex precision.
+ * @param[in]       A       Input matrix A, single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, single complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, single complex precision.
+ * @param[in,out]   C       Result matrix, single complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_cher2k(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *B,
+        const int                   ldb,
+        const float                 beta,
+        void                        *C,
+        const int                   ldc
+        );
+
+
+/**
+ * @brief This function computes scalar-matrix-matrix product using a Hermitian
+ * matrix A and a general matrix B and add the result to a scalar-matrix product
+ * using a general matrix C. Single complex precision.
+ *
+ * @details $C = \alhpa \cdot A \cdot B + \beta \cdot C$
+ *
+ * or
+ *
+ * $C = \alhpa \cdot B \cdot A + \beta \cdot C$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Side    Specify the side of A relative to B.
+ * @param[in]       Uplo    Specify which triangular part of matrix A should be
+ * used. When CblasUpper is set, the upper part of Hermitian matrix A is used.
+ * When CblasLower is set, the lower part of Hermitian matrix A is used.
+ *
+ * @param[in]       M       The number of rows of matrix C. It must be at least
+ * zero.
+ * least zero.
+ *
+ * @param[in]       alpha   Scale, double complex precision.
+ * @param[in]       A       Hermitian matrix A, double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, double complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, double complex precision.
+ * @param[in,out]   C       Result matrix, double complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_zhemm(
+        const enum CBLAS_ORDER  Order,
+        const enum CBLAS_SIDE   Side,
+        const enum CBLAS_UPLO   Uplo,
+        const int               M,
+        const int               N,
+        const void              *alpha,
+        const void              *A,
+        const int               lda,
+        const void              *B,
+        const int               ldb,
+        const void              *beta,
+        void                    *C,
+        const int               ldc
+        );
+
+
+/**
+ * @brief Perform a rank-k matrix-matrix operation using a general matrix A with
+ * a Hermitian matrix C. Double complex precision.
+ *
+ * @details $C = \alpha \cdot A \cdot A^{*} + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{*} \cdot A + \beta \cdot C$,
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A. When CblasNoTrans is
+ * set, $C = \alpha \cdot A \cdot A^{*} + \beta \cdot C$. When CblasTrans or
+ * CblasConjTrans is set $C = \alpha \cdot A^{*} \cdot A + \beta \codt C$.
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale for matrix A, double complex precision.
+ * @param[in]       A       Input matrix A, double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, double complex precision.
+ * @param[in,out]   C       Result Hermitian matrix, double complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_zherk(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const double                alpha,
+        const void                  *A,
+        const int                   lda,
+        const double                beta,
+        void                        *C,
+        const int                   ldc
+        );
+
+
+/**
+ * @brief Perform a rank-2 matrix-matrix operation using general matrices A and
+ * B and a Hermitian matrix C. Double complex precision.
+ *
+ * @details $C = \alpha \cdot A \cdot B^{*} + \bar{\alpha} \cdot B \cdot A^{*}
+ * + \beta \cdot C$,
+ *
+ * or
+ *
+ * $C = \alpha \cdot A^{*} \cdot B + \bar{\alpha} \cdot B^{*} \cdot A
+ * + \beta \cdot C$
+ *
+ * @param[in]       Order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa.
+ *
+ * @param[in]       Uplo    Specify the triangular part of C to be used in
+ * computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       Trans   Transpose flag for matrix A.
+ * When CblasNoTrans is set,
+ * $C = \alpha \cdot A \cdot B^{*} + \alpha \cdot B \cdot A^{*} + \beta \cdot C$
+ * When CblasConjTrans is set,
+ * $C = \alpha \cdot A^{*} \cdot B + \alpha \cdot B^{*} \cdot A + \beta \cdot C$
+ *
+ * @param[in]       N       The order of matrix C. It must be at least 0. C is a
+ * square matrix.
+ *
+ * @param[in]       K       Number of columns in $op(A)$. It must be at least 0.
+ *
+ * @param[in]       alpha   Scale, double complex precision.
+ * @param[in]       A       Input matrix A, double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       B       Input matrix B, double complex precision.
+ * @param[in]       ldb     The leading dimension of matrix B. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       beta    Scale for the matrix C, double complex precision.
+ * @param[in,out]   C       Result matrix, double complex precision.
+ * @param[in]       ldc     The leading dimension of matrix C. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ */
+void
+cblas_zher2k(
+        const enum CBLAS_ORDER      Order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  Trans,
+        const int                   N,
+        const int                   K,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *B,
+        const int                   ldb,
+        const double                beta,
+        void                        *C,
+        const int                   ldc
+        );
+
+
+/**
+ * @brief An error handler.
+ *
+ * @param[in]   p       Position of the invalid parameter in the parameter list
+ * of the calling routine.
+ *
+ * @param[in]   rout    Routine name.
+ *
+ * @param[in]   form    Format.
+ *
+ */
+void
+cblas_xerbla(
+        int         p,
+        const char  *rout,
+        const char  *form,
+        ...
+        );
 
 #ifdef __cplusplus
 }
