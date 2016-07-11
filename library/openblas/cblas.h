@@ -1179,265 +1179,2079 @@ cblas_zdscal(
 /*
  * Routines with standard 4 prefixes (S, D, C, Z)
  */
-void cblas_sgemv(const enum CBLAS_ORDER order,
-                 const enum CBLAS_TRANSPOSE TransA, const int M, const int N,
-                 const float alpha, const float *A, const int lda,
-                 const float *X, const int incX, const float beta,
-                 float *Y, const int incY);
-void cblas_sgbmv(const enum CBLAS_ORDER order,
-                 const enum CBLAS_TRANSPOSE TransA, const int M, const int N,
-                 const int KL, const int KU, const float alpha,
-                 const float *A, const int lda, const float *X,
-                 const int incX, const float beta, float *Y, const int incY);
-void cblas_strmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const float *A, const int lda,
-                 float *X, const int incX);
-void cblas_stbmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const int K, const float *A, const int lda,
-                 float *X, const int incX);
-void cblas_stpmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const float *Ap, float *X, const int incX);
-void cblas_strsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const float *A, const int lda, float *X,
-                 const int incX);
-void cblas_stbsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const int K, const float *A, const int lda,
-                 float *X, const int incX);
-void cblas_stpsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const float *Ap, float *X, const int incX);
 
-void cblas_dgemv(const enum CBLAS_ORDER order,
-                 const enum CBLAS_TRANSPOSE TransA, const int M, const int N,
-                 const double alpha, const double *A, const int lda,
-                 const double *X, const int incX, const double beta,
-                 double *Y, const int incY);
-void cblas_dgbmv(const enum CBLAS_ORDER order,
-                 const enum CBLAS_TRANSPOSE TransA, const int M, const int N,
-                 const int KL, const int KU, const double alpha,
-                 const double *A, const int lda, const double *X,
-                 const int incX, const double beta, double *Y, const int incY);
-void cblas_dtrmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const double *A, const int lda,
-                 double *X, const int incX);
-void cblas_dtbmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const int K, const double *A, const int lda,
-                 double *X, const int incX);
-void cblas_dtpmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const double *Ap, double *X, const int incX);
-void cblas_dtrsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const double *A, const int lda, double *X,
-                 const int incX);
-void cblas_dtbsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const int K, const double *A, const int lda,
-                 double *X, const int incX);
-void cblas_dtpsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const double *Ap, double *X, const int incX);
 
-void cblas_cgemv(const enum CBLAS_ORDER order,
-                 const enum CBLAS_TRANSPOSE TransA, const int M, const int N,
-                 const void *alpha, const void *A, const int lda,
-                 const void *X, const int incX, const void *beta,
-                 void *Y, const int incY);
-void cblas_cgbmv(const enum CBLAS_ORDER order,
-                 const enum CBLAS_TRANSPOSE TransA, const int M, const int N,
-                 const int KL, const int KU, const void *alpha,
-                 const void *A, const int lda, const void *X,
-                 const int incX, const void *beta, void *Y, const int incY);
-void cblas_ctrmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const void *A, const int lda,
-                 void *X, const int incX);
-void cblas_ctbmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const int K, const void *A, const int lda,
-                 void *X, const int incX);
-void cblas_ctpmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const void *Ap, void *X, const int incX);
-void cblas_ctrsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const void *A, const int lda, void *X,
-                 const int incX);
-void cblas_ctbsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const int K, const void *A, const int lda,
-                 void *X, const int incX);
-void cblas_ctpsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const void *Ap, void *X, const int incX);
+/**
+ * @brief General matrix-vector product. Single precision.
+ *
+ * @details $Y = \alpha \cdot op(A) \cdot X + \beta \cdot Y$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       M       Number of rows in A. It must be at least 0.
+ * @param[in]       N       Number of columns in A. It must be at least 0.
+ * @param[in]       alpha   Scale for matrix A. Single precision.
+ * @param[in]       A       Input matrix A. Single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       X       Input vector X. Single precision.
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ * @param[in]       beta    Scale for vector Y. Single precision.
+ * @param[in,out]   Y       Result vector when output. Single precision.
+ * @param[in]       incY    Increment of index when visiting elements in Y.
+ *
+ */
+void
+cblas_sgemv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const int                   M,
+        const int                   N,
+        const float                 alpha,
+        const float                 *A,
+        const int                   lda,
+        const float                 *X,
+        const int                   incX,
+        const float                 beta,
+        float                       *Y,
+        const int                   incY
+        );
 
-void cblas_zgemv(const enum CBLAS_ORDER order,
-                 const enum CBLAS_TRANSPOSE TransA, const int M, const int N,
-                 const void *alpha, const void *A, const int lda,
-                 const void *X, const int incX, const void *beta,
-                 void *Y, const int incY);
-void cblas_zgbmv(const enum CBLAS_ORDER order,
-                 const enum CBLAS_TRANSPOSE TransA, const int M, const int N,
-                 const int KL, const int KU, const void *alpha,
-                 const void *A, const int lda, const void *X,
-                 const int incX, const void *beta, void *Y, const int incY);
-void cblas_ztrmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const void *A, const int lda,
-                 void *X, const int incX);
-void cblas_ztbmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const int K, const void *A, const int lda,
-                 void *X, const int incX);
-void cblas_ztpmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const void *Ap, void *X, const int incX);
-void cblas_ztrsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const void *A, const int lda, void *X,
-                 const int incX);
-void cblas_ztbsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const int K, const void *A, const int lda,
-                 void *X, const int incX);
-void cblas_ztpsv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_DIAG Diag,
-                 const int N, const void *Ap, void *X, const int incX);
+
+/**
+ * @brief General (band) matrix-vector product. Single precision.
+ *
+ * @details $Y = \alpha \cdot op(A) \cdot X + \beta \cdot Y$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       M       Number of rows in A. It must be at least 0.
+ * @param[in]       N       Number of columns in A. It must be at least 0.
+ * @param[in]       KL      Number of sub-diagonals in A. At least 0.
+ * @param[in]       KU      Number of super-diagnoals in A. At least 0.
+ * @param[in]       alpha   Scale for matrix A. Single precision.
+ * @param[in]       A       Input band matrix A. Single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       X       Input vector X. Single precision.
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ * @param[in]       beta    Scale for vector Y. Single precision.
+ * @param[in,out]   Y       Result vector when output. Single precision.
+ * @param[in]       incY    Increment of index when visiting elements in Y.
+ *
+ */
+void
+cblas_sgbmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const int                   M,
+        const int                   N,
+        const int                   KL,
+        const int                   KU,
+        const float                 alpha,
+        const float                 *A,
+        const int                   lda,
+        const float                 *X,
+        const int                   incX,
+        const float                 beta,
+        float                       *Y,
+        const int                   incY
+        );
+
+
+/**
+ * @brief Triangular matrix-vector product. Single precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular matrix A. Single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Single
+ * precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_strmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const float                 *A,
+        const int                   lda,
+        float                       *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Triangular band matrix-vector product. Single precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       K       When CblasUnit is set, K is the number of
+ * super-diagonals of the matrix A. When CblasNoUnit is set, K is the number of
+ * sub-diagonals of the matrix A.
+ *
+ * @param[in]       A       Input triagular band matrix A. Single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Single
+ * precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_stbmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const int                   K,
+        const float                 *A,
+        const int                   lda,
+        float                       *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Triangular packed matrix-vector product. Single precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular packed matrix A. Length
+ * $n \cdot (n + 1) / 2$. When CblasLower is set, $Ap[0] = A11, Ap[1] = A12,
+ * Ap[2] = A22$. When CblasUpper is set, $Ap[0] = A11, Ap[1] = A21,
+ * Ap[2] = A31$.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Single
+ * precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_stpmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const float                 *Ap,
+        float                       *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular matrix.
+ * Single precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular matrix A. Single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Single precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_strsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const float                 *A,
+        const int                   lda,
+        float                       *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular band
+ * matrix. Single precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       K       When CblasUnit is set, K is the number of
+ * super-diagonals of the matrix A. When CblasNoUnit is set, K is the number of
+ * sub-diagonals of the matrix A.
+ *
+ * @param[in]       A       Input triagular band matrix A. Single precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Single precision.
+ *
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_stbsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const int                   K,
+        const float                 *A,
+        const int                   lda,
+        float                       *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular packed
+ * matrix. Single precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular packed matrix A. Length
+ * $n \cdot (n + 1) / 2$. When CblasLower is set, $Ap[0] = A11, Ap[1] = A12,
+ * Ap[2] = A22$. When CblasUpper is set, $Ap[0] = A11, Ap[1] = A21,
+ * Ap[2] = A31$.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Single precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_stpsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const float                 *Ap,
+        float                       *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief General matrix-vector product. Double precision.
+ *
+ * @details $Y = \alpha \cdot op(A) \cdot X + \beta \cdot Y$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       M       Number of rows in A. It must be at least 0.
+ * @param[in]       N       Number of columns in A. It must be at least 0.
+ * @param[in]       alpha   Scale for matrix A. Double precision.
+ * @param[in]       A       Input matrix A. Double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       X       Input vector X. Double precision.
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ * @param[in]       beta    Scale for vector Y. Double precision.
+ * @param[in,out]   Y       Result vector when output. Double precision.
+ * @param[in]       incY    Increment of index when visiting elements in Y.
+ *
+ */
+void
+cblas_dgemv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const int                   M,
+        const int                   N,
+        const double                alpha,
+        const double                *A,
+        const int                   lda,
+        const double                *X,
+        const int                   incX,
+        const double                beta,
+        double                      *Y,
+        const int                   incY
+        );
+
+
+/**
+ * @brief General (band) matrix-vector product. Double precision.
+ *
+ * @details $Y = \alpha \cdot op(A) \cdot X + \beta \cdot Y$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       M       Number of rows in A. It must be at least 0.
+ * @param[in]       N       Number of columns in A. It must be at least 0.
+ * @param[in]       KL      Number of sub-diagonals in A. At least 0.
+ * @param[in]       KU      Number of super-diagnoals in A. At least 0.
+ * @param[in]       alpha   Scale for matrix A. Double precision.
+ * @param[in]       A       Input band matrix A. Double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       X       Input vector X. Double precision.
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ * @param[in]       beta    Scale for vector Y. Double precision.
+ * @param[in,out]   Y       Result vector when output. Double precision.
+ * @param[in]       incY    Increment of index when visiting elements in Y.
+ *
+ */
+void
+cblas_dgbmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const int                   M,
+        const int                   N,
+        const int                   KL,
+        const int                   KU,
+        const double                alpha,
+        const double                *A,
+        const int                   lda,
+        const double                *X,
+        const int                   incX,
+        const double                beta,
+        double                      *Y,
+        const int                   incY
+        );
+
+
+/**
+ * @brief Triangular matrix-vector product. Double precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular matrix A. Double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Double
+ * precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_dtrmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const double                *A,
+        const int                   lda,
+        double                      *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Triangular band matrix-vector product. Double precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       K       When CblasUnit is set, K is the number of
+ * super-diagonals of the matrix A. When CblasNoUnit is set, K is the number of
+ * sub-diagonals of the matrix A.
+ *
+ * @param[in]       A       Input triagular band matrix A. Double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Double
+ * precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_dtbmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const int                   K,
+        const double                *A,
+        const int                   lda,
+        double                      *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Triangular packed matrix-vector product. Double precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular packed matrix A. Length
+ * $n \cdot (n + 1) / 2$. When CblasLower is set, $Ap[0] = A11, Ap[1] = A12,
+ * Ap[2] = A22$. When CblasUpper is set, $Ap[0] = A11, Ap[1] = A21,
+ * Ap[2] = A31$.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Double
+ * precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_dtpmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const double                *Ap,
+        double                      *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular matrix.
+ * Double precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular matrix A. Double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Double precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_dtrsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const double                *A,
+        const int                   lda,
+        double                      *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular band
+ * matrix. Double precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       K       When CblasUnit is set, K is the number of
+ * super-diagonals of the matrix A. When CblasNoUnit is set, K is the number of
+ * sub-diagonals of the matrix A.
+ *
+ * @param[in]       A       Input triagular band matrix A. Double precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Double precision.
+ *
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_dtbsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const int                   K,
+        const double                *A,
+        const int                   lda,
+        double                      *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular packed
+ * matrix. Double precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans or CblasConjTrans is set, $op(A) = A^{T}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular packed matrix A. Length
+ * $n \cdot (n + 1) / 2$. When CblasLower is set, $Ap[0] = A11, Ap[1] = A12,
+ * Ap[2] = A22$. When CblasUpper is set, $Ap[0] = A11, Ap[1] = A21,
+ * Ap[2] = A31$.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Double precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_dtpsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const double                *Ap,
+        double                      *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief General matrix-vector product. Single complex precision.
+ *
+ * @details $Y = \alpha \cdot op(A) \cdot X + \beta \cdot Y$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       M       Number of rows in A. It must be at least 0.
+ * @param[in]       N       Number of columns in A. It must be at least 0.
+ * @param[in]       alpha   Scale for matrix A. Single complex precision.
+ * @param[in]       A       Input matrix A. Single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       X       Input vector X. Single complex precision.
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ * @param[in]       beta    Scale for vector Y. Single complex precision.
+ * @param[in,out]   Y       Result vector when output. Single complex precision.
+ * @param[in]       incY    Increment of index when visiting elements in Y.
+ *
+ */
+void
+cblas_cgemv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const int                   M,
+        const int                   N,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *X,
+        const int                   incX,
+        const void                  *beta,
+        void                        *Y,
+        const int                   incY
+        );
+
+
+/**
+ * @brief General (band) matrix-vector product. Single complex precision.
+ *
+ * @details $Y = \alpha \cdot op(A) \cdot X + \beta \cdot Y$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       M       Number of rows in A. It must be at least 0.
+ * @param[in]       N       Number of columns in A. It must be at least 0.
+ * @param[in]       KL      Number of sub-diagonals in A. At least 0.
+ * @param[in]       KU      Number of super-diagnoals in A. At least 0.
+ * @param[in]       alpha   Scale for matrix A. Single complex precision.
+ * @param[in]       A       Input band matrix A. Single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       X       Input vector X. Single complex precision.
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ * @param[in]       beta    Scale for vector Y. Single complex precision.
+ * @param[in,out]   Y       Result vector when output. Single complex precision.
+ * @param[in]       incY    Increment of index when visiting elements in Y.
+ *
+ */
+void
+cblas_cgbmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const int                   M,
+        const int                   N,
+        const int                   KL,
+        const int                   KU,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *X,
+        const int                   incX,
+        const void                  *beta,
+        void                        *Y,
+        const int                   incY
+        );
+
+
+/**
+ * @brief Triangular matrix-vector product. Single complex precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular matrix A. Single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Single
+ * complex precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ctrmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const void                  *A,
+        const int                   lda,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Triangular band matrix-vector product. Single complex precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       K       When CblasUnit is set, K is the number of
+ * super-diagonals of the matrix A. When CblasNoUnit is set, K is the number of
+ * sub-diagonals of the matrix A.
+ *
+ * @param[in]       A       Input triagular band matrix A. Single complex
+ * precision.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Single
+ * complex precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ctbmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const int                   K,
+        const void                  *A,
+        const int                   lda,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Triangular packed matrix-vector product. Single complex precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular packed matrix A. Length
+ * $n \cdot (n + 1) / 2$. When CblasLower is set, $Ap[0] = A11, Ap[1] = A12,
+ * Ap[2] = A22$. When CblasUpper is set, $Ap[0] = A11, Ap[1] = A21,
+ * Ap[2] = A31$.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Single
+ * complex precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ctpmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const void                  *Ap,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular matrix.
+ * Single complex precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular matrix A. Single complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Single complex precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ctrsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const void                  *A,
+        const int                   lda,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular band
+ * matrix. Single complex precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       K       When CblasUnit is set, K is the number of
+ * super-diagonals of the matrix A. When CblasNoUnit is set, K is the number of
+ * sub-diagonals of the matrix A.
+ *
+ * @param[in]       A       Input triagular band matrix A. Single complex
+ * precision.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Single complex precision.
+ *
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ctbsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const int                   K,
+        const void                  *A,
+        const int                   lda,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular packed
+ * matrix. Single complex precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular packed matrix A. Length
+ * $n \cdot (n + 1) / 2$. When CblasLower is set, $Ap[0] = A11, Ap[1] = A12,
+ * Ap[2] = A22$. When CblasUpper is set, $Ap[0] = A11, Ap[1] = A21,
+ * Ap[2] = A31$.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Single complex precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ctpsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const void                  *Ap,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief General matrix-vector product. Double complex precision.
+ *
+ * @details $Y = \alpha \cdot op(A) \cdot X + \beta \cdot Y$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       M       Number of rows in A. It must be at least 0.
+ * @param[in]       N       Number of columns in A. It must be at least 0.
+ * @param[in]       alpha   Scale for matrix A. Double complex precision.
+ * @param[in]       A       Input matrix A. Double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       X       Input vector X. Double complex precision.
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ * @param[in]       beta    Scale for vector Y. Double complex precision.
+ * @param[in,out]   Y       Result vector when output. Double complex precision.
+ * @param[in]       incY    Increment of index when visiting elements in Y.
+ *
+ */
+void
+cblas_zgemv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const int                   M,
+        const int                   N,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *X,
+        const int                   incX,
+        const void                  *beta,
+        void                        *Y,
+        const int                   incY
+        );
+
+
+/**
+ * @brief General (band) matrix-vector product. Double complex precision.
+ *
+ * @details $Y = \alpha \cdot op(A) \cdot X + \beta \cdot Y$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       M       Number of rows in A. It must be at least 0.
+ * @param[in]       N       Number of columns in A. It must be at least 0.
+ * @param[in]       KL      Number of sub-diagonals in A. At least 0.
+ * @param[in]       KU      Number of super-diagnoals in A. At least 0.
+ * @param[in]       alpha   Scale for matrix A. Double complex precision.
+ * @param[in]       A       Input band matrix A. Double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in]       X       Input vector X. Double complex precision.
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ * @param[in]       beta    Scale for vector Y. Double complex precision.
+ * @param[in,out]   Y       Result vector when output. Double complex precision.
+ * @param[in]       incY    Increment of index when visiting elements in Y.
+ *
+ */
+void
+cblas_zgbmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const int                   M,
+        const int                   N,
+        const int                   KL,
+        const int                   KU,
+        const void                  *alpha,
+        const void                  *A,
+        const int                   lda,
+        const void                  *X,
+        const int                   incX,
+        const void                  *beta,
+        void                        *Y,
+        const int                   incY
+        );
+
+
+/**
+ * @brief Triangular matrix-vector product. Double complex precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular matrix A. Double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Double
+ * complex precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ztrmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const void                  *A,
+        const int                   lda,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Triangular band matrix-vector product. Double complex precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       K       When CblasUnit is set, K is the number of
+ * super-diagonals of the matrix A. When CblasNoUnit is set, K is the number of
+ * sub-diagonals of the matrix A.
+ *
+ * @param[in]       A       Input triagular band matrix A. Double complex
+ * precision.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Double
+ * complex precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ztbmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const int                   K,
+        const void                  *A,
+        const int                   lda,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Triangular packed matrix-vector product. Double complex precision.
+ *
+ * @details $Y = op(A) \cdot X$
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular packed matrix A. Length
+ * $n \cdot (n + 1) / 2$. When CblasLower is set, $Ap[0] = A11, Ap[1] = A12,
+ * Ap[2] = A22$. When CblasUpper is set, $Ap[0] = A11, Ap[1] = A21,
+ * Ap[2] = A31$.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       Input vector X. It is also the result vector. Double
+ * complex precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ztpmv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const void                  *Ap,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular matrix.
+ * Double complex precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular matrix A. Double complex precision.
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Double complex precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ztrsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const void                  *A,
+        const int                   lda,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular band
+ * matrix. Double complex precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       K       When CblasUnit is set, K is the number of
+ * super-diagonals of the matrix A. When CblasNoUnit is set, K is the number of
+ * sub-diagonals of the matrix A.
+ *
+ * @param[in]       A       Input triagular band matrix A. Double complex
+ * precision.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Double complex precision.
+ *
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ztbsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const int                   K,
+        const void                  *A,
+        const int                   lda,
+        void                        *X,
+        const int                   incX
+        );
+
+
+/**
+ * @brief Solve linear equations whose coefficients are in a triangular packed
+ * matrix. Double complex precision.
+ *
+ * @details $op(A) \cdot X = b$.
+ *
+ * @param[in]       order   The dimension, in which the elements are continuous
+ * in memory. When the elements within a row are continuous in memory, then
+ * CblasRowMajor should be set, and vice versa. It is used to describe the
+ * memory layout of the input matrix, which means the transpose parameters
+ * (TransA) has nothing to do with the major order.
+ *
+ * @param[in]       Uplo    Specify the triangular part of matrix A to be used
+ * in computation (upper triangular part or lower triangular part).
+ *
+ * @param[in]       TransA  Transpose flag for matrix A. When CblasNoTrans is
+ * set, $op(A) = A$. When CblasTrans is set, $op(A) = A^{T}$. When
+ * CblasConjTrans is set, $op(A) = A^{*}$.
+ *
+ * @param[in]       Diag    Specifies whether matrix A is unit triangular.
+ *
+ * @param[in]       N       The order of square matrix A. It must be at least 0.
+ * @param[in]       A       Input triagular packed matrix A. Length
+ * $n \cdot (n + 1) / 2$. When CblasLower is set, $Ap[0] = A11, Ap[1] = A12,
+ * Ap[2] = A22$. When CblasUpper is set, $Ap[0] = A11, Ap[1] = A21,
+ * Ap[2] = A31$.
+ *
+ * @param[in]       lda     The leading dimension of matrix A. It should be
+ * equal to or larger than the length of the major order dimension described by
+ * parameter Order.
+ *
+ * @param[in,out]   X       The b in equation when input. The result X when
+ * output. Double complex precision.
+ *
+ * @param[in]       incX    Increment of index when visiting elements in X.
+ *
+ */
+void
+cblas_ztpsv(
+        const enum CBLAS_ORDER      order,
+        const enum CBLAS_UPLO       Uplo,
+        const enum CBLAS_TRANSPOSE  TransA,
+        const enum CBLAS_DIAG       Diag,
+        const int                   N,
+        const void                  *Ap,
+        void                        *X,
+        const int                   incX
+        );
 
 
 /*
  * Routines with S and D prefixes only
  */
-void cblas_ssymv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const float alpha, const float *A,
-                 const int lda, const float *X, const int incX,
-                 const float beta, float *Y, const int incY);
-void cblas_ssbmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const int K, const float alpha, const float *A,
-                 const int lda, const float *X, const int incX,
-                 const float beta, float *Y, const int incY);
-void cblas_sspmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const float alpha, const float *Ap,
-                 const float *X, const int incX,
-                 const float beta, float *Y, const int incY);
-void cblas_sger(const enum CBLAS_ORDER order, const int M, const int N,
-                const float alpha, const float *X, const int incX,
-                const float *Y, const int incY, float *A, const int lda);
-void cblas_ssyr(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const float alpha, const float *X,
-                const int incX, float *A, const int lda);
-void cblas_sspr(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const float alpha, const float *X,
-                const int incX, float *Ap);
-void cblas_ssyr2(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const float alpha, const float *X,
-                const int incX, const float *Y, const int incY, float *A,
-                const int lda);
-void cblas_sspr2(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const float alpha, const float *X,
-                const int incX, const float *Y, const int incY, float *A);
+void
+cblas_ssymv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const float             alpha,
+        const float             *A,
+        const int               lda,
+        const float             *X,
+        const int               incX,
+        const float             beta,
+        float                   *Y,
+        const int               incY
+        );
 
-void cblas_dsymv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const double alpha, const double *A,
-                 const int lda, const double *X, const int incX,
-                 const double beta, double *Y, const int incY);
-void cblas_dsbmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const int K, const double alpha, const double *A,
-                 const int lda, const double *X, const int incX,
-                 const double beta, double *Y, const int incY);
-void cblas_dspmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const double alpha, const double *Ap,
-                 const double *X, const int incX,
-                 const double beta, double *Y, const int incY);
-void cblas_dger(const enum CBLAS_ORDER order, const int M, const int N,
-                const double alpha, const double *X, const int incX,
-                const double *Y, const int incY, double *A, const int lda);
-void cblas_dsyr(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const double alpha, const double *X,
-                const int incX, double *A, const int lda);
-void cblas_dspr(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const double alpha, const double *X,
-                const int incX, double *Ap);
-void cblas_dsyr2(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const double alpha, const double *X,
-                const int incX, const double *Y, const int incY, double *A,
-                const int lda);
-void cblas_dspr2(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const double alpha, const double *X,
-                const int incX, const double *Y, const int incY, double *A);
+
+void
+cblas_ssbmv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const int               K,
+        const float             alpha,
+        const float             *A,
+        const int               lda,
+        const float             *X,
+        const int               incX,
+        const float             beta,
+        float                   *Y,
+        const int               incY
+        );
+
+
+void
+cblas_sspmv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const float             alpha,
+        const float             *Ap,
+        const float             *X,
+        const int               incX,
+        const float             beta,
+        float                   *Y,
+        const int               incY
+        );
+
+
+void
+cblas_sger(
+        const enum CBLAS_ORDER  order,
+        const int               M,
+        const int               N,
+        const float             alpha,
+        const float             *X,
+        const int               incX,
+        const float             *Y,
+        const int               incY,
+        float                   *A,
+        const int               lda
+        );
+
+
+void
+cblas_ssyr(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const float             alpha,
+        const float             *X,
+        const int               incX,
+        float                   *A,
+        const int               lda
+        );
+
+
+void
+cblas_sspr(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const float             alpha,
+        const float             *X,
+        const int               incX,
+        float                   *Ap
+        );
+
+
+void
+cblas_ssyr2(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const float             alpha,
+        const float             *X,
+        const int               incX,
+        const float             *Y,
+        const int               incY,
+        float                   *A,
+        const int               lda
+        );
+
+
+void
+cblas_sspr2(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const float             alpha,
+        const float             *X,
+        const int               incX,
+        const float             *Y,
+        const int               incY,
+        float                   *A
+        );
+
+
+void
+cblas_dsymv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const double            alpha,
+        const double            *A,
+        const int               lda,
+        const double            *X,
+        const int               incX,
+        const double            beta,
+        double                  *Y,
+        const int               incY
+        );
+
+
+void
+cblas_dsbmv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const int               K,
+        const double            alpha,
+        const double            *A,
+        const int               lda,
+        const double            *X,
+        const int               incX,
+        const double            beta,
+        double                  *Y,
+        const int               incY
+        );
+
+
+void
+cblas_dspmv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const double            alpha,
+        const double            *Ap,
+        const double            *X,
+        const int               incX,
+        const double            beta,
+        double                  *Y,
+        const int               incY
+        );
+
+
+void
+cblas_dger(
+        const enum CBLAS_ORDER  order,
+        const int               M,
+        const int               N,
+        const double            alpha,
+        const double            *X,
+        const int               incX,
+        const double            *Y,
+        const int               incY,
+        double                  *A,
+        const int               lda
+        );
+
+
+void
+cblas_dsyr(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const double            alpha,
+        const double            *X,
+        const int               incX,
+        double                  *A,
+        const int               lda
+        );
+
+
+void
+cblas_dspr(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const double            alpha,
+        const double            *X,
+        const int               incX,
+        double                  *Ap
+        );
+
+
+void
+cblas_dsyr2(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const double            alpha,
+        const double            *X,
+        const int               incX,
+        const double            *Y,
+        const int               incY,
+        double                  *A,
+        const int               lda
+        );
+
+
+void
+cblas_dspr2(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const double            alpha,
+        const double            *X,
+        const int               incX,
+        const double            *Y,
+        const int               incY,
+        double                  *A
+        );
 
 
 /*
  * Routines with C and Z prefixes only
  */
-void cblas_chemv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const void *alpha, const void *A,
-                 const int lda, const void *X, const int incX,
-                 const void *beta, void *Y, const int incY);
-void cblas_chbmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const int K, const void *alpha, const void *A,
-                 const int lda, const void *X, const int incX,
-                 const void *beta, void *Y, const int incY);
-void cblas_chpmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const void *alpha, const void *Ap,
-                 const void *X, const int incX,
-                 const void *beta, void *Y, const int incY);
-void cblas_cgeru(const enum CBLAS_ORDER order, const int M, const int N,
-                 const void *alpha, const void *X, const int incX,
-                 const void *Y, const int incY, void *A, const int lda);
-void cblas_cgerc(const enum CBLAS_ORDER order, const int M, const int N,
-                 const void *alpha, const void *X, const int incX,
-                 const void *Y, const int incY, void *A, const int lda);
-void cblas_cher(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const float alpha, const void *X, const int incX,
-                void *A, const int lda);
-void cblas_chpr(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const float alpha, const void *X,
-                const int incX, void *A);
-void cblas_cher2(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo, const int N,
-                const void *alpha, const void *X, const int incX,
-                const void *Y, const int incY, void *A, const int lda);
-void cblas_chpr2(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo, const int N,
-                const void *alpha, const void *X, const int incX,
-                const void *Y, const int incY, void *Ap);
+void
+cblas_chemv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const void              *alpha,
+        const void              *A,
+        const int               lda,
+        const void              *X,
+        const int               incX,
+        const void              *beta,
+        void                    *Y,
+        const int               incY
+        );
 
-void cblas_zhemv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const void *alpha, const void *A,
-                 const int lda, const void *X, const int incX,
-                 const void *beta, void *Y, const int incY);
-void cblas_zhbmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const int K, const void *alpha, const void *A,
-                 const int lda, const void *X, const int incX,
-                 const void *beta, void *Y, const int incY);
-void cblas_zhpmv(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                 const int N, const void *alpha, const void *Ap,
-                 const void *X, const int incX,
-                 const void *beta, void *Y, const int incY);
-void cblas_zgeru(const enum CBLAS_ORDER order, const int M, const int N,
-                 const void *alpha, const void *X, const int incX,
-                 const void *Y, const int incY, void *A, const int lda);
-void cblas_zgerc(const enum CBLAS_ORDER order, const int M, const int N,
-                 const void *alpha, const void *X, const int incX,
-                 const void *Y, const int incY, void *A, const int lda);
-void cblas_zher(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const double alpha, const void *X, const int incX,
-                void *A, const int lda);
-void cblas_zhpr(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo,
-                const int N, const double alpha, const void *X,
-                const int incX, void *A);
-void cblas_zher2(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo, const int N,
-                const void *alpha, const void *X, const int incX,
-                const void *Y, const int incY, void *A, const int lda);
-void cblas_zhpr2(const enum CBLAS_ORDER order, const enum CBLAS_UPLO Uplo, const int N,
-                const void *alpha, const void *X, const int incX,
-                const void *Y, const int incY, void *Ap);
+
+void
+cblas_chbmv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const int               K,
+        const void              *alpha,
+        const void              *A,
+        const int               lda,
+        const void              *X,
+        const int               incX,
+        const void              *beta,
+        void                    *Y,
+        const int               incY
+        );
+
+
+void
+cblas_chpmv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const void              *alpha,
+        const void              *Ap,
+        const void              *X,
+        const int               incX,
+        const void              *beta,
+        void                    *Y,
+        const int               incY
+        );
+
+
+void
+cblas_cgeru(
+        const enum CBLAS_ORDER  order,
+        const int               M,
+        const int               N,
+        const void              *alpha,
+        const void              *X,
+        const int               incX,
+        const void              *Y,
+        const int               incY,
+        void                    *A,
+        const int               lda
+        );
+
+
+void
+cblas_cgerc(
+        const enum CBLAS_ORDER  order,
+        const int               M,
+        const int               N,
+        const void              *alpha,
+        const void              *X,
+        const int               incX,
+        const void              *Y,
+        const int               incY,
+        void                    *A,
+        const int               lda
+        );
+
+
+void
+cblas_cher(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const float             alpha,
+        const void              *X,
+        const int               incX,
+        void                    *A,
+        const int               lda
+        );
+
+
+void
+cblas_chpr(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const float             alpha,
+        const void              *X,
+        const int               incX,
+        void                    *A
+        );
+
+
+void
+cblas_cher2(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const void              *alpha,
+        const void              *X,
+        const int               incX,
+        const void              *Y,
+        const int               incY,
+        void                    *A,
+        const int               lda
+        );
+
+
+void
+cblas_chpr2(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const void              *alpha,
+        const void              *X,
+        const int               incX,
+        const void              *Y,
+        const int               incY,
+        void                    *Ap
+        );
+
+
+void
+cblas_zhemv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const void              *alpha,
+        const void              *A,
+        const int               lda,
+        const void              *X,
+        const int               incX,
+        const void              *beta,
+        void                    *Y,
+        const int               incY
+        );
+
+
+void
+cblas_zhbmv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const int               K,
+        const void              *alpha,
+        const void              *A,
+        const int               lda,
+        const void              *X,
+        const int               incX,
+        const void              *beta,
+        void                    *Y,
+        const int               incY
+        );
+
+
+void
+cblas_zhpmv(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const void              *alpha,
+        const void              *Ap,
+        const void              *X,
+        const int               incX,
+        const void              *beta,
+        void                    *Y,
+        const int               incY
+        );
+
+
+void
+cblas_zgeru(
+        const enum CBLAS_ORDER  order,
+        const int               M,
+        const int               N,
+        const void              *alpha,
+        const void              *X,
+        const int               incX,
+        const void              *Y,
+        const int               incY,
+        void                    *A,
+        const int               lda
+        );
+
+
+void
+cblas_zgerc(
+        const enum CBLAS_ORDER  order,
+        const int               M,
+        const int               N,
+        const void              *alpha,
+        const void              *X,
+        const int               incX,
+        const void              *Y,
+        const int               incY,
+        void                    *A,
+        const int               lda
+        );
+
+
+void
+cblas_zher(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const double            alpha,
+        const void              *X,
+        const int               incX,
+        void                    *A,
+        const int               lda
+        );
+
+
+void
+cblas_zhpr(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const double            alpha,
+        const void              *X,
+        const int               incX,
+        void                    *A
+        );
+
+
+void
+cblas_zher2(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const void              *alpha,
+        const void              *X,
+        const int               incX,
+        const void              *Y,
+        const int               incY,
+        void                    *A,
+        const int               lda
+        );
+
+
+void
+cblas_zhpr2(
+        const enum CBLAS_ORDER  order,
+        const enum CBLAS_UPLO   Uplo,
+        const int               N,
+        const void              *alpha,
+        const void              *X,
+        const int               incX,
+        const void              *Y,
+        const int               incY,
+        void                    *Ap
+        );
+
 
 /*
  * ===========================================================================
