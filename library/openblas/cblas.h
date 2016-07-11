@@ -784,22 +784,25 @@ cblas_srotg(
 
 
 /**
- * @brief Given two vectors $X$ and $Y$, replace them with the following result:
- * $(x_{i}, y_{i}) = H \codt (x_{i}, y_{i})$, where $i \in \{1, ..., N\}$,
- * $H$ is a modified *Givens Rotation*.
+ * @brief Given a 2D coordinate of a vector $(x1, y1)$, this function computes
+ * the components of a modified Givens transformation matrix H that zeros the
+ * $y$-component of the resulting vector. Single precision.
  *
- * @param[in]       N       The length of vectors $x$ and $y$.
- * @param[in,out]   X       The first input vector. When output, each $x[i]$ is
- * replaced with $h_{11} \cdot x[i] + h_{12} \cdot x[i]$. Single precision.
+ * @details [x1, 0]^{T} = H \cdot [x1 \cdot \sqrt{d1}, y1 \cdot \sqrt{d2}]^{T}
  *
- * @param[in]       incX    The stride for operations on the elements in X.
- * @param[in,out]   Y       The second input vector. When output, each $x[i]$ is
- * replaced with $h_{21} \cdot x[i] + h_{22} \cdot x[i]$. Single precision.
+ * @param[in,out]   d1  The scaling factor for x-coordinate. The first diagonal
+ * element of the updated matrix when output. Single precision.
  *
- * @param[in]       incY    The stride for operations on the elements in Y.
- * @param[in]       P       An array of length 5. `param[0]` is a flag. The
- * rests are the values in the Givens rotation matrix. The components of $H$ are
- * set as follows:
+ * @param[in,out]   d2  The scaling factor for y-coordinate. The second diagonal
+ * element of the updated matrix when output. Single precision.
+ *
+ * @param[in,out]   b1  The x-coordinate. The x-coordinate of the rotated vector
+ * before scaling. Single precision.
+ *
+ * @param[in]       b2  The y-coordinate. Single precision.
+ * @param[in]       P   An array of length 5. `param[0]` is a flag. The rests
+ * are the values in the Givens rotation matrix. The components of $H$ are set
+ * as follows:
  *
  * `param[0] == -1.0`: $h_{11} = h_{11}, h_{12} = h_{12}, h_{21} = h_{21},
  * h_{22} = h_{22}$
@@ -923,7 +926,47 @@ cblas_drotg(
         );
 
 
-void cblas_drotmg(double *d1, double *d2, double *b1, const double b2, double *P);
+/**
+ * @brief Given a 2D coordinate of a vector $(x1, y1)$, this function computes
+ * the components of a modified Givens transformation matrix H that zeros the
+ * $y$-component of the resulting vector. Double precision.
+ *
+ * @details [x1, 0]^{T} = H \cdot [x1 \cdot \sqrt{d1}, y1 \cdot \sqrt{d2}]^{T}
+ *
+ * @param[in,out]   d1  The scaling factor for x-coordinate. The first diagonal
+ * element of the updated matrix when output. Double precision.
+ *
+ * @param[in,out]   d2  The scaling factor for y-coordinate. The second diagonal
+ * element of the updated matrix when output. Double precision.
+ *
+ * @param[in,out]   b1  The x-coordinate. The x-coordinate of the rotated vector
+ * before scaling. Double precision.
+ *
+ * @param[in]       b2  The y-coordinate. Double precision.
+ * @param[in]       P   An array of length 5. `param[0]` is a flag. The rests
+ * are the values in the Givens rotation matrix. The components of $H$ are set
+ * as follows:
+ *
+ * `param[0] == -1.0`: $h_{11} = h_{11}, h_{12} = h_{12}, h_{21} = h_{21},
+ * h_{22} = h_{22}$
+ *
+ * `param[0] == 0.0`: $h_{11} = 1.0, h_{12} = h_{12}, h_{21} = h_{21},
+ * h_{22} = 1.0$
+ *
+ * `param[0] == 1.0`: $h_{11} = h_{11}, h_{12} = 1.0, h_{21} = -1.0,
+ * h_{22} = h_{22}$
+ *
+ * `param[0] == -2.0`: $h_{11} = 1.0, h_{12} = 0.0, h_{21} = 0.0, h_{22} = 1.0$
+ *
+ */
+void
+cblas_drotmg(
+        double          *d1,
+        double          *d2,
+        double          *b1,
+        const double    b2,
+        double          *P
+        );
 
 
 /**
