@@ -754,29 +754,247 @@ cblas_zaxpy(
 
 
 /**
- * @brief Rescale a vector with single precision.
+ * @brief Compute the *Givens Rotation* of a 2D point (a, b). Single precision.
  *
- * @details $result = \alpha \cdot X$
+ * @details *[Givens Rotation](https://en.wikipedia.org/wiki/Givens_rotation)*
  *
- * @param[in]       N       Size of vector.
- * @param[in]       alpha   Scale factor, single precision.
- * @param[in,out]   X       Input vector, single precision.
- * @param[in]       incX    Stride within input vector when computing.
+ * @param[in,out]   a   First element of the input vector. It is also the
+ * parameter $r$ of the *Givens Rotation* after finishing execution:
+ * $r = \sqrt{a^{2} + b^{2}}$. Single precision.
+ *
+ * @param[in,out]   b   Second element of the input vector. It is also the
+ * parameter $z$ of the *Givens Rotation* after finishing execution:
+ * If $|a| > |b|$, $z$ is $s$, otherwise $c \neq 0 \Rightarrow z = 1 / c$ or
+ * $c = 0 \Rightarrow z = 1$. Single precision.
+ *
+ * @param[in]       c   The parameter $c$ related to the *Givens Rotation*:
+ * $c = a / r$. Single precision.
+ *
+ * @param[in]       s   The parameter $s$ related to the *Givens Rotation*:
+ * $s = -b / r$. Single precision.
  *
  */
-void cblas_srotg(float *a, float *b, float *c, float *s);
-void cblas_srotmg(float *d1, float *d2, float *b1, const float b2, float *P);
-void cblas_srot(const int N, float *X, const int incX,
-                float *Y, const int incY, const float c, const float s);
-void cblas_srotm(const int N, float *X, const int incX,
-                float *Y, const int incY, const float *P);
+void
+cblas_srotg(
+        float *a,
+        float *b,
+        float *c,
+        float *s
+        );
 
-void cblas_drotg(double *a, double *b, double *c, double *s);
+
+/**
+ * @brief Given two vectors $X$ and $Y$, replace them with the following result:
+ * $(x_{i}, y_{i}) = H \codt (x_{i}, y_{i})$, where $i \in \{1, ..., N\}$,
+ * $H$ is a modified *Givens Rotation*.
+ *
+ * @param[in]       N       The length of vectors $x$ and $y$.
+ * @param[in,out]   X       The first input vector. When output, each $x[i]$ is
+ * replaced with $h_{11} \cdot x[i] + h_{12} \cdot x[i]$. Single precision.
+ *
+ * @param[in]       incX    The stride for operations on the elements in X.
+ * @param[in,out]   Y       The second input vector. When output, each $x[i]$ is
+ * replaced with $h_{21} \cdot x[i] + h_{22} \cdot x[i]$. Single precision.
+ *
+ * @param[in]       incY    The stride for operations on the elements in Y.
+ * @param[in]       P       An array of length 5. `param[0]` is a flag. The
+ * rests are the values in the Givens rotation matrix. The components of $H$ are
+ * set as follows:
+ *
+ * `param[0] == -1.0`: $h_{11} = h_{11}, h_{12} = h_{12}, h_{21} = h_{21},
+ * h_{22} = h_{22}$
+ *
+ * `param[0] == 0.0`: $h_{11} = 1.0, h_{12} = h_{12}, h_{21} = h_{21},
+ * h_{22} = 1.0$
+ *
+ * `param[0] == 1.0`: $h_{11} = h_{11}, h_{12} = 1.0, h_{21} = -1.0,
+ * h_{22} = h_{22}$
+ *
+ * `param[0] == -2.0`: $h_{11} = 1.0, h_{12} = 0.0, h_{21} = 0.0, h_{22} = 1.0$
+ *
+ */
+void
+cblas_srotmg(
+        float       *d1,
+        float       *d2,
+        float       *b1,
+        const float b2,
+        float       *P
+        );
+
+
+/**
+ * @brief Given two vectors $X$ and $Y$, replace them with the following result:
+ * $x_{i} = c \cdot x_{i} + s \cdot y_{i},
+ * y_{i} = c \cdot y_{i} - s \cdot x_{i}$
+ *
+ * @param[in]       N       The length of vectors $x$ and $y$.
+ * @param[in,out]   X       The first input vector. When output, each $x[i]$ is
+ * replaced with $c \cdot x_{i} + s \cdot y_{i}$. Single precision.
+ *
+ * @param[in]       incX    The stride for operations on the elements in X.
+ * @param[in,out]   Y       The second input vector. When output, each $x[i]$ is
+ * replaced with $c \cdot y_{i} - s \cdot x_{i}$. Single precision.
+ *
+ * @param[in]       incY    The stride for operations on the elements in Y.
+ * @param[in]       c       Scale factor $c$. Single precision.
+ * @param[in]       s       Scale factor $s$. Single precision.
+ *
+ */
+void
+cblas_srot(
+        const int   N,
+        float       *X,
+        const int   incX,
+        float       *Y,
+        const int   incY,
+        const float c,
+        const float s
+        );
+
+
+/**
+ * @brief Given two vectors $X$ and $Y$, replace them with the following result:
+ * $(x_{i}, y_{i}) = H \codt (x_{i}, y_{i})$, where $i \in \{1, ..., N\}$,
+ * $H$ is a modified *Givens Rotation*.
+ *
+ * @param[in]       N       The length of vectors $x$ and $y$.
+ * @param[in,out]   X       The first input vector. When output, each $x[i]$ is
+ * replaced with $h_{11} \cdot x[i] + h_{12} \cdot x[i]$. Single precision.
+ *
+ * @param[in]       incX    The stride for operations on the elements in X.
+ * @param[in,out]   Y       The second input vector. When output, each $x[i]$ is
+ * replaced with $h_{21} \cdot x[i] + h_{22} \cdot x[i]$. Single precision.
+ *
+ * @param[in]       incY    The stride for operations on the elements in Y.
+ * @param[in]       P       An array of length 5. `param[0]` is a flag. The
+ * rests are the values in the Givens rotation matrix. The components of $H$ are
+ * set as follows:
+ *
+ * `param[0] == -1.0`: $h_{11} = h_{11}, h_{12} = h_{12}, h_{21} = h_{21},
+ * h_{22} = h_{22}$
+ *
+ * `param[0] == 0.0`: $h_{11} = 1.0, h_{12} = h_{12}, h_{21} = h_{21},
+ * h_{22} = 1.0$
+ *
+ * `param[0] == 1.0`: $h_{11} = h_{11}, h_{12} = 1.0, h_{21} = -1.0,
+ * h_{22} = h_{22}$
+ *
+ * `param[0] == -2.0`: $h_{11} = 1.0, h_{12} = 0.0, h_{21} = 0.0, h_{22} = 1.0$
+ *
+ */
+void
+cblas_srotm(
+        const int   N,
+        float       *X,
+        const int   incX,
+        float       *Y,
+        const int   incY,
+        const float *P
+        );
+
+/**
+ * @brief Compute the *Givens Rotation* of a 2D point (a, b). Double precision.
+ *
+ * @details *[Givens Rotation](https://en.wikipedia.org/wiki/Givens_rotation)*
+ *
+ * @param[in,out]   a   First element of the input vector. It is also the
+ * parameter $r$ of the *Givens Rotation* after finishing execution:
+ * $r = \sqrt{a^{2} + b^{2}}$. Double precision.
+ *
+ * @param[in,out]   b   Second element of the input vector. It is also the
+ * parameter $z$ of the *Givens Rotation* after finishing execution:
+ * If $|a| > |b|$, $z$ is $s$, otherwise $c \neq 0 \Rightarrow z = 1 / c$ or
+ * $c = 0 \Rightarrow z = 1$. Double precision.
+ *
+ * @param[in]       c   The parameter $c$ related to the *Givens Rotation*:
+ * $c = a / r$. Double precision.
+ *
+ * @param[in]       s   The parameter $s$ related to the *Givens Rotation*:
+ * $s = -b / r$. Double precision.
+ *
+ */
+void
+cblas_drotg(
+        double *a,
+        double *b,
+        double *c,
+        double *s
+        );
+
+
 void cblas_drotmg(double *d1, double *d2, double *b1, const double b2, double *P);
-void cblas_drot(const int N, double *X, const int incX,
-                double *Y, const int incY, const double c, const double  s);
-void cblas_drotm(const int N, double *X, const int incX,
-                double *Y, const int incY, const double *P);
+
+
+/**
+ * @brief Given two vectors $X$ and $Y$, replace them with the following result:
+ * $x_{i} = c \cdot x_{i} + s \cdot y_{i},
+ * y_{i} = c \cdot y_{i} - s \cdot x_{i}$
+ *
+ * @param[in]       N       The length of vectors $x$ and $y$.
+ * @param[in,out]   X       The first input vector. When output, each $x[i]$ is
+ * replaced with $c \cdot x_{i} + s \cdot y_{i}$. Double precision.
+ *
+ * @param[in]       incX    The stride for operations on the elements in X.
+ * @param[in,out]   Y       The second input vector. When output, each $x[i]$ is
+ * replaced with $c \cdot y_{i} - s \cdot x_{i}$. Double precision.
+ *
+ * @param[in]       incY    The stride for operations on the elements in Y.
+ * @param[in]       c       Scale factor $c$. Double precision.
+ * @param[in]       s       Scale factor $s$. Double precision.
+ *
+ */
+void
+cblas_drot(
+        const int       N,
+        double          *X,
+        const int       incX,
+        double          *Y,
+        const int       incY,
+        const double    c,
+        const double    s
+        );
+
+
+/**
+ * @brief Given two vectors $X$ and $Y$, replace them with the following result:
+ * $(x_{i}, y_{i}) = H \codt (x_{i}, y_{i})$, where $i \in \{1, ..., N\}$,
+ * $H$ is a modified *Givens Rotation*.
+ *
+ * @param[in]       N       The length of vectors $x$ and $y$.
+ * @param[in,out]   X       The first input vector. When output, each $x[i]$ is
+ * replaced with $h_{11} \cdot x[i] + h_{12} \cdot x[i]$. Double precision.
+ *
+ * @param[in]       incX    The stride for operations on the elements in X.
+ * @param[in,out]   Y       The second input vector. When output, each $x[i]$ is
+ * replaced with $h_{21} \cdot x[i] + h_{22} \cdot x[i]$. Double precision.
+ *
+ * @param[in]       incY    The stride for operations on the elements in Y.
+ * @param[in]       P       An array of length 5. `param[0]` is a flag. The
+ * rests are the values in the Givens rotation matrix. The components of $H$ are
+ * set as follows:
+ *
+ * `param[0] == -1.0`: $h_{11} = h_{11}, h_{12} = h_{12}, h_{21} = h_{21},
+ * h_{22} = h_{22}$
+ *
+ * `param[0] == 0.0`: $h_{11} = 1.0, h_{12} = h_{12}, h_{21} = h_{21},
+ * h_{22} = 1.0$
+ *
+ * `param[0] == 1.0`: $h_{11} = h_{11}, h_{12} = 1.0, h_{21} = -1.0,
+ * h_{22} = h_{22}$
+ *
+ * `param[0] == -2.0`: $h_{11} = 1.0, h_{12} = 0.0, h_{21} = 0.0, h_{22} = 1.0$
+ *
+ */
+void
+cblas_drotm(
+        const int       N,
+        double          *X,
+        const int       incX,
+        double          *Y,
+        const int       incY,
+        const double    *P
+        );
 
 
 /*
