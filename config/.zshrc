@@ -19,7 +19,7 @@ export LOCAL_SHARE=$LOCAL_USR/share
 
 # Bin, include and LD path
 export PATH=$LOCAL_BIN:$PATH
-export CPATH=$PATH:$LOCAL_INCLUDE
+export CPATH=$CPATH:$LOCAL_INCLUDE
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LOCAL_LIB:$LOCAL_LIB64
 
 # Software-related variables
