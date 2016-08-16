@@ -8,5 +8,5 @@ highlight ColorColumn ctermbg=8
 set wrap
 set textwidth=0
 
-" Color theme monokai
-color monokai
+" Color theme molokai
+color molokai

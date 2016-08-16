@@ -17,16 +17,16 @@ export LOCAL_LIB=$LOCAL_USR/lib
 export LOCAL_LIB64=$LOCAL_USR/lib64
 export LOCAL_SHARE=$LOCAL_USR/share
 
-# Bin, include and LD path
-export PATH=$LOCAL_BIN:$PATH
-export CPATH=$CPATH:$LOCAL_INCLUDE
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LOCAL_LIB:$LOCAL_LIB64
-
 # Software-related variables
 export CONDA_ROOT=$LOCAL_USR/anaconda3
 export CONDA_BIN=$CONDA_ROOT/bin
 export CONDA_INCLUDE=$CONDA_ROOT/include
 export CONDA_LIB=$CONDA_ROOT/lib
+
+# Bin, include and LD path
+export PATH=$CONDA_BIN:$LOCAL_BIN:$PATH
+export CPATH=$CPATH:$LOCAL_INCLUDE
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LOCAL_LIB:$LOCAL_LIB64
 
 # Make Home and End button be available via SSH
 bindkey "\033[1~" beginning-of-line
