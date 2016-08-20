@@ -8,5 +8,6 @@ highlight ColorColumn ctermbg=8
 set wrap
 set textwidth=0
 
-" Color theme molokai
-color molokai
+" Color theme dark peaksea
+color peaksea
+set background=dark
