@@ -12,7 +12,7 @@ make install PREFIX=$LOCAL_USR
 
 # Install Vim with +lua
 cd ../vim
-./configure --prefix=$LOCAL_USR - --with-features=huge --with-luajit \
+./configure --prefix=$LOCAL_USR --with-features=huge --with-luajit \
     --enable-luainterp=yes --enable-fail-if-missing \
     --with-local-dir=$LOCAL_USR --with-lua-prefix=$LOCAL_USR
 make -j4
