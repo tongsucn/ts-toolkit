@@ -1,15 +1,26 @@
 # My own setting, attach to the end of .zshrc under home folder
 # Alias
+# Python alias
 alias py="python"
 alias py2="python2"
 alias py3="python3"
-alias py34="python3.4"
-alias py35="python3.5"
+
+# Git alias
+function gita () {
+    git add $*
+    git status
+}
+alias gitas="git add -A; git status"
+alias gitc="git commit -m"
+alias gitp="git push"
+alias gitr="git reset HEAD"
+alias gits="git status"
 
 # ZSH theme
 ZSH_THEME="agnoster"
 
 # Environment setting
+# Local USR
 export LOCAL_USR=$HOME/.local
 export LOCAL_BIN=$LOCAL_USR/bin
 export LOCAL_INCLUDE=$LOCAL_USR/include
