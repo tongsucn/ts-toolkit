@@ -12,6 +12,7 @@ function gita () {
 }
 alias gitas="git add -A; git status"
 alias gitc="git commit -m"
+alias gitd="git diff"
 alias gitp="git push"
 alias gitr="git reset HEAD"
 alias gits="git status"
