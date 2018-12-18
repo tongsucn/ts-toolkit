@@ -3,5 +3,6 @@
 # GitHub
 host github.com
   HostName github.com
-  IdentityFile ~/.ssh/ssh_file_name_for_github
+  Port 22
   User git
+  IdentityFile ~/.ssh/ssh_file_name_for_github

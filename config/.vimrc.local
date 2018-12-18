@@ -14,8 +14,9 @@ filetype indent on
 " Ruler setting
 set colorcolumn=80
 highlight ColorColumn ctermbg=8
+set cursorcolumn
 
-" C++ 11 syntax check
+" C++ 14 syntax check
 let g:syntastic_cpp_compiler_options = ' -std=c++14'
 
 let g:neocomplcache_disable_auto_complete = 1
