@@ -13,6 +13,7 @@ filetype indent on
 
 " Ruler setting
 set colorcolumn=80
+set colorcolumn=100
 highlight ColorColumn ctermbg=8
 set cursorcolumn
 
