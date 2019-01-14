@@ -65,7 +65,6 @@ Plugin 'tpope/vim-markdown'          " Markdown support.
 " Python
 Plugin 'yssource/python.vim' " Basic config., incl. high-light etc.
 Plugin 'pythoncomplete'      " Semantatic enhancement.
-Plugin 'nvie/vim-flake8'     " Static analytics.
 Plugin 'python_match.vim'    " Enhance if-else's % motion in Python.
 
 " Javascript
