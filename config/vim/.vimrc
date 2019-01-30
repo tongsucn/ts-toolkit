@@ -43,10 +43,8 @@ Plugin 'vim-scripts/restore_view.vim' " Restoring cursor position after restart.
 Plugin 'tpope/vim-commentary'         " Commenting out blocks.
 
 " AutoComplete.
-Plugin 'Shougo/neocomplete.vim.git'
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets'
-Plugin 'honza/vim-snippets'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'zxqfl/tabnine-vim'
 
 " Syntax checker.
 Plugin 'w0rp/ale'
@@ -65,6 +63,7 @@ Plugin 'tpope/vim-markdown'          " Markdown support.
 " Python
 Plugin 'yssource/python.vim' " Basic config., incl. high-light etc.
 Plugin 'pythoncomplete'      " Semantatic enhancement.
+Plugin 'nvie/vim-flake8'     " Static analytics.
 Plugin 'python_match.vim'    " Enhance if-else's % motion in Python.
 
 " Javascript
@@ -289,8 +288,13 @@ if isdirectory(expand("~/.vim/bundle/ale/"))
         \ 'sh': ['shellcheck', 'shfmt'],
         \ }
     " Set fixer.
+    let g:ale_fixers = {
+    \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+    \}
     " Shutdown ALE's completion.
     let g:ale_completion_enabled = 0
+    " Automatically fixing.
+    let g:ale_fix_on_save = 1
 endif
 
 
