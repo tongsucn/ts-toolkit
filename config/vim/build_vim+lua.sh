@@ -9,6 +9,7 @@ CONFIG_PYTHON_3=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu
 set -e
 
 # Install dependencies.
+sudo apt update && sudo apt upgrade
 sudo apt install build-essential cmake libncurses5-dev python-dev python3-dev \
     ruby-dev lua5.1 liblua5.1-dev luajit libluajit-5.1-dev libperl-dev git
 
@@ -34,7 +35,7 @@ cd -
 rm -fr vim-$VERSION_VIM $NAME_VIM
 
 # Override vimrc
-mkdir -p $HOME/.backup_vim
+mkdir -p $HOME/.vim/bundle $HOME/.backup_vim
 mv $HOME/.vim* $HOME/.backup_vim
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 cp ./.vimrc $HOME
