@@ -21,8 +21,8 @@ alias gitr="git reset HEAD"
 alias gits="git status"
 
 # Source alias
-alias sa="source activate"
-alias sd="source deactivate"
+alias sa="conda activate"
+alias sd="conda deactivate"
 
 # Environment setting
 # Local USR
