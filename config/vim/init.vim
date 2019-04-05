@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" This .vimrc file is based on default configuration of spf13/spf13-vim, and
+" This init.vim file is based on default configuration of spf13/spf13-vim, and
 " highly optimized for tongsucn's daily development requirements.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -11,10 +11,10 @@ set nocompatible
 filetype off
 
 " Set the runtime path to include Vundle and initialize.
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.config/nvim/bundle/Vundle.vim
 
 " Plugins list begins.
-call vundle#begin()
+call vundle#begin('~/.config/nvim/bundle')
 
 " Let Vundle manage Vundle and other dependencies, required.
 Plugin 'VundleVim/Vundle.vim'
@@ -35,12 +35,10 @@ Plugin 'spf13/vim-preview'                " Preview of Markdown etc.
 
 " Functionality enhancement.
 Plugin 'jiangmiao/auto-pairs'         " Brackets and quotes auto complete.
-Plugin 'tpope/vim-fugitive'           " Git operations integration.
 Plugin 'ctrlpvim/ctrlp.vim'           " Ctrl+P to find files etc.
 Plugin 'tacahiroy/ctrlp-funky'        " Enhancement for ctrlp.
 Plugin 'easymotion/vim-easymotion'    " Fast cursor movements.
 Plugin 'vim-scripts/restore_view.vim' " Restoring cursor position after restart.
-Plugin 'tpope/vim-commentary'         " Commenting out blocks.
 
 " AutoComplete.
 Plugin 'Valloric/YouCompleteMe'  " The famous YouCompleteMe plugin.
@@ -70,18 +68,6 @@ Plugin 'python_match.vim'    " Enhance if-else's % motion in Python.
 Plugin 'pangloss/vim-javascript' " Basic config. for JS.
 Plugin 'briancollins/vim-jst'    " High-light and indenting for JST/EJS.
 Plugin 'elzr/vim-json'           " JSON support.
-
-" Haskell
-Plugin 'travitch/hasksyn'
-Plugin 'dag/vim2hs'
-Plugin 'Twinside/vim-haskellConceal'
-Plugin 'Twinside/vim-haskellFold'
-Plugin 'lukerandall/haskellmode-vim'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'eagletmt/ghcmod-vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'adinapoli/cumino'
-Plugin 'bitc/vim-hdevtools'
 
 " Golang
 Plugin 'fatih/vim-go'
@@ -120,11 +106,11 @@ set list                        " Make whitespace visible.
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Show problematic whitespace.
 
 " Use solarized color scheme.
-if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
+if filereadable(expand("~/.config/nvim/colors/solarized.vim"))
     let g:solarized_termtrans=1
     let g:solarized_contrast="normal"
     let g:solarized_visibility="normal"
-    color solarized
+    colorscheme solarized
 endif
 
 " Show ruler.
@@ -277,7 +263,7 @@ au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 au FileType go nmap <leader>co <Plug>(go-coverage)
 
 " ALE
-if isdirectory(expand("~/.vim/bundle/ale/"))
+if isdirectory(expand("~/.config/nvim/bundle/ale/"))
     " Set linter.
     let g:ale_linters = {
         \ 'c': ['gcc', 'cppcheck', 'cpplint'],
@@ -321,7 +307,7 @@ if gitroot != ''
 endif
 
 " Ctrlp
-if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
+if isdirectory(expand("~/.config/nvim/bundle/ctrlp.vim/"))
     let g:ctrlp_working_path_mode = 'ra'
     nnoremap <silent> <D-t> :CtrlP<CR>
     nnoremap <silent> <D-r> :CtrlPMRU<CR>
@@ -349,7 +335,7 @@ if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
         \ 'fallback': s:ctrlp_fallback
         \ }
 
-    if isdirectory(expand("~/.vim/bundle/ctrlp-funky/"))
+    if isdirectory(expand("~/.config/nvim/bundle/ctrlp-funky/"))
         " CtrlP extensions
         let g:ctrlp_extensions = ['funky']
 
@@ -359,12 +345,12 @@ if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
 endif
 
 " Rainbow
-if isdirectory(expand("~/.vim/bundle/rainbow/"))
+if isdirectory(expand("~/.config/nvim/bundle/rainbow/"))
     let g:rainbow_active = 1
 endif
 
 " Fugitive
-if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
+if isdirectory(expand("~/.config/nvim/bundle/vim-fugitive/"))
     nnoremap <silent> <leader>gs :Gstatus<CR>
     nnoremap <silent> <leader>gd :Gdiff<CR>
     nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -380,7 +366,7 @@ if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
 endif
 
 " Airline
-if isdirectory(expand("~/.vim/bundle/vim-airline-themes/"))
+if isdirectory(expand("~/.config/nvim/bundle/vim-airline-themes/"))
     if !exists('g:airline_theme')
         let g:airline_theme = 'atomic'
     endif
@@ -423,7 +409,6 @@ endfunction
 
 function! InitializeDirectories()
     let parent = $HOME
-    let prefix = 'vim'
     let dir_list = {
         \ 'backup': 'backupdir',
         \ 'views': 'viewdir',
@@ -433,7 +418,7 @@ function! InitializeDirectories()
         let dir_list['undo'] = 'undodir'
     endif
 
-    let common_dir = parent . '/.' . prefix
+    let common_dir = parent . '/.config/nvim/cache/'
 
     for [dirname, settingname] in items(dir_list)
         let directory = common_dir . dirname . '/'
