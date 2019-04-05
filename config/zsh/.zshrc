@@ -1,6 +1,15 @@
+export ZSH="/home/iamtongsu/.oh-my-zsh"
+
 # My own setting, attach to the end of .zshrc under home folder
 # ZSH theme
 ZSH_THEME="bullet-train"
+
+# Plugins
+plugins=(
+  git
+)
+
+source $ZSH/oh-my-zsh.sh
 
 # Alias
 # Python alias
@@ -20,9 +29,23 @@ alias gitp="git push"
 alias gitr="git reset HEAD"
 alias gits="git status"
 
+# SVN alias
+function svna () {
+    svn add $*
+    svn status
+}
+alias svnc="svn commit -m"
+alias svnd="svn diff"
+alias svnu="svn update"
+alias svns="svn status"
+
 # Source alias
-alias sa="conda activate"
-alias sd="conda deactivate"
+alias sa="source activate"
+alias sd="source deactivate"
+
+# Vim alias
+alias vim="nvim"
+alias vimdiff="vim -d"
 
 # Environment setting
 # Local USR
