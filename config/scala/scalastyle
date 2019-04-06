@@ -1,0 +1,4 @@
+#!/bin/bash
+
+DIR_CURR=`dirname $0`
+java -jar $DIR_CURR/scalastyle_2.10-1.0.0-batch.jar "$@"
