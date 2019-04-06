@@ -42,7 +42,7 @@ Plugin 'vim-scripts/restore_view.vim' " Restoring cursor position after restart.
 
 " AutoComplete.
 Plugin 'Valloric/YouCompleteMe'  " The famous YouCompleteMe plugin.
-Plugin 'zxqfl/tabnine-vim'       " TabNine, based on YouCompleteMe.
+Plugin 'zxqfl/tabnine-vim'       " TabNine, based on YouCompleteMe, blur match.
 
 " Syntax checker.
 Plugin 'w0rp/ale'  " ALE linter framework.
@@ -240,6 +240,7 @@ if isdirectory(expand("~/.config/nvim/bundle/ale/"))
         \ 'proto': ['proto-gen-lint'],
         \ 'go': ['gofmt', 'golint', 'go vet'],
         \ 'sh': ['shellcheck', 'shfmt'],
+        \ 'scala': ['fsc', 'scalac', 'scalafmt', 'scalastyle'],
         \ }
     " Set fixer.
     let g:ale_fixers = {
@@ -269,6 +270,9 @@ augroup textobj_quote
     autocmd FileType textile call textobj#quote#init()
     autocmd FileType text call textobj#quote#init({'educate': 0})
 augroup END
+
+" Vim-over
+let g:over#command_line#substitute#replace_pattern_visually = 1
 
 " Ctags
 set tags=./tags;/,~/.config/nvim/cache/vimtags
