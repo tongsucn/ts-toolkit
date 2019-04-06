@@ -56,12 +56,27 @@ export LOCAL_LIB=$LOCAL_USR/lib
 export LOCAL_LIB64=$LOCAL_USR/lib64
 export LOCAL_SHARE=$LOCAL_USR/share
 
+# Java
+export JAVA_HOME=$LOCAL_USR/jdk
+export JAVA_BIN=$JAVA_HOME/bin
+
+# Scala
+export SBT_HOME=$LOCAL_USR/sbt
+export SBT_HOME=$SBT_HOME/bin
+export SCALA_HOME=$LOCAL_USR/scala
+export SCALA_BIN=$SCALA_HOME/bin
+
+# Golang
+export GOROOT=$LOCAL_USR/go
+export GOPATH=$HOME/work/golang
+export GO_BIN=$GOROOT/bin
+
 # Software-related variables
 export CONDA_HOME=$LOCAL_USR/miniconda3
 export CONDA_BIN=$CONDA_HOME/bin
 
 # Bin, include and LD path
-export PATH=$CONDA_BIN:$LOCAL_BIN:$PATH
+export PATH=$CONDA_BIN:$GO_BIN:$JAVA_BIN:$SCALA_BIN:$SBT_BIN:$LOCAL_BIN:$PATH
 export CPATH=$CPATH:$LOCAL_INCLUDE
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LOCAL_LIB:$LOCAL_LIB64
 
