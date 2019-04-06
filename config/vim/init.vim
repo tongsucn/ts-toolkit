@@ -16,7 +16,7 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim
 " Plugins list begins.
 call vundle#begin('~/.config/nvim/bundle')
 
-" Let Vundle manage Vundle and other dependencies, required.
+" Let Vundle manages Vundle and other dependencies, required.
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -31,7 +31,7 @@ Plugin 'osyo-manga/vim-over'              " Real-time high-light match when
 Plugin 'mhinz/vim-signify'                " Version control info high-light.
 Plugin 'rhysd/conflict-marker.vim'        " High-light git conflict markers.
 Plugin 'luochen1990/rainbow'              " Colorize brackets.
-Plugin 'spf13/vim-preview'                " Preview of Markdown etc.
+Plugin 'iamcco/markdown-preview.nvim'     " Preview of Markdown etc.
 
 " Functionality enhancement.
 Plugin 'jiangmiao/auto-pairs'         " Brackets and quotes auto complete.
@@ -60,7 +60,7 @@ Plugin 'tpope/vim-markdown'          " Markdown support.
 
 " Python
 Plugin 'yssource/python.vim' " Basic config., incl. high-light etc.
-Plugin 'pythoncomplete'      " Semantatic enhancement.
+Plugin 'pythoncomplete'      " Semantic enhancement.
 Plugin 'nvie/vim-flake8'     " Static analytics.
 Plugin 'python_match.vim'    " Enhance if-else's % motion in Python.
 
@@ -70,10 +70,13 @@ Plugin 'briancollins/vim-jst'    " High-light and indenting for JST/EJS.
 Plugin 'elzr/vim-json'           " JSON support.
 
 " Golang
-Plugin 'fatih/vim-go'
+Plugin 'fatih/vim-go'  " Golang.
 
 " Rustlang
-Plugin 'rust-lang/rust.vim'
+Plugin 'rust-lang/rust.vim'  " Rustlang.
+
+" Scala
+Plugin 'derekwyatt/vim-scala'  " Scala.
 
 " Plugins list ends.
 call vundle#end()
@@ -113,32 +116,9 @@ if filereadable(expand("~/.config/nvim/colors/solarized.vim"))
     colorscheme solarized
 endif
 
-" Show ruler.
-if has('cmdline_info')
-    set ruler                                          " Show ruler.
-    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids.
-    set showcmd  " Show partial commands in status line and selected
-                 " characters/lines in visual mode
-endif
-
-" Show status line.
-if has('statusline')
-    set laststatus=2
-    set statusline=%<%f\                     " Filename.
-    set statusline+=%w%h%m%r                 " Options.
-    set statusline+=\ [%{&ff}/%Y]            " Filetype.
-    set statusline+=\ [%{getcwd()}]          " Current dir.
-    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info.
-endif
-
 
 " Formatting configurations.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup restoreCursor
-    autocmd!
-    autocmd BufWinEnter * call RestoreCursor()
-augroup END
-
 set backspace=indent,eol,start " Backspace for dummies.
 set autoindent                 " Enable automatically indenting.
 set shiftwidth=4               " Set tab's width to 4.
@@ -146,9 +126,6 @@ set tabstop=4                  " Indent size 4.
 set softtabstop=4              " Backspace is able to delete indent.
 set expandtab                  " Convert tab to space.
 set nojoinspaces               " Prevent inserting 2 spaces when joining lines.
-
-" Remove trailing whitespaces and ^M chars.
-autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
 
 " Language-oriented formatting configurations.
 autocmd FileType go autocmd BufWritePre <buffer> Fmt
@@ -252,22 +229,13 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
-au FileType go nmap <Leader>s <Plug>(go-implements)
-au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <Leader>e <Plug>(go-rename)
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-au FileType go nmap <leader>co <Plug>(go-coverage)
 
 " ALE
 if isdirectory(expand("~/.config/nvim/bundle/ale/"))
     " Set linter.
     let g:ale_linters = {
         \ 'c': ['gcc', 'cppcheck', 'cpplint'],
-        \ 'cpp': ['g++', 'cppcheck', 'cpplint'],
+        \ 'cpp': ['gcc', 'cppcheck', 'cpplint'],
         \ 'python': ['flake8'],
         \ 'proto': ['proto-gen-lint'],
         \ 'go': ['gofmt', 'golint', 'go vet'],
@@ -277,10 +245,14 @@ if isdirectory(expand("~/.config/nvim/bundle/ale/"))
     let g:ale_fixers = {
     \   '*': ['remove_trailing_lines', 'trim_whitespace'],
     \}
+    " Only run linters named in ale_linters settings.
+    let g:ale_linters_explicit = 1
     " Shutdown ALE's completion.
     let g:ale_completion_enabled = 0
     " Automatically fixing.
     let g:ale_fix_on_save = 1
+    " Keep sign gutter on.
+    let g:ale_sign_column_always = 1
 endif
 
 
@@ -299,7 +271,7 @@ augroup textobj_quote
 augroup END
 
 " Ctags
-set tags=./tags;/,~/.vimtags
+set tags=./tags;/,~/.config/nvim/cache/vimtags
 " Make tags placed in .git/tags file available in all levels of a repository
 let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
 if gitroot != ''
@@ -313,7 +285,7 @@ if isdirectory(expand("~/.config/nvim/bundle/ctrlp.vim/"))
     nnoremap <silent> <D-r> :CtrlPMRU<CR>
     let g:ctrlp_custom_ignore = {
         \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-        \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+        \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc\|\.a$' }
 
     if executable('ag')
         let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
@@ -349,22 +321,6 @@ if isdirectory(expand("~/.config/nvim/bundle/rainbow/"))
     let g:rainbow_active = 1
 endif
 
-" Fugitive
-if isdirectory(expand("~/.config/nvim/bundle/vim-fugitive/"))
-    nnoremap <silent> <leader>gs :Gstatus<CR>
-    nnoremap <silent> <leader>gd :Gdiff<CR>
-    nnoremap <silent> <leader>gc :Gcommit<CR>
-    nnoremap <silent> <leader>gb :Gblame<CR>
-    nnoremap <silent> <leader>gl :Glog<CR>
-    nnoremap <silent> <leader>gp :Git push<CR>
-    nnoremap <silent> <leader>gr :Gread<CR>
-    nnoremap <silent> <leader>gw :Gwrite<CR>
-    nnoremap <silent> <leader>ge :Gedit<CR>
-    " Mnemonic _i_nteractive
-    nnoremap <silent> <leader>gi :Git add -p %<CR>
-    nnoremap <silent> <leader>gg :SignifyToggle<CR>
-endif
-
 " Airline
 if isdirectory(expand("~/.config/nvim/bundle/vim-airline-themes/"))
     if !exists('g:airline_theme')
@@ -375,6 +331,8 @@ if isdirectory(expand("~/.config/nvim/bundle/vim-airline-themes/"))
         let g:airline_left_sep='›'  " Slightly fancier than '>'
         let g:airline_right_sep='‹' " Slightly fancier than '<'
     endif
+    " Show ALE linter messages.
+    let g:airline#extensions#ale#enabled = 1
 endif
 
 "_______________________________________________________________________________
@@ -385,27 +343,6 @@ endif
 "_______________________________________________________________________________
 " Functions, BEGIN.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Function for removing trailing whitespace.
-function! StripTrailingWhitespace()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position.
-    let @/=_s
-    call cursor(l, c)
-endfunction
-
-" Function for restoring cursor.
-function! RestoreCursor()  " Function for recovering cursor position.
-    if line("'\"") <= line("$")
-        silent! normal! g`"
-        return 1
-    endif
-endfunction
 
 function! InitializeDirectories()
     let parent = $HOME
