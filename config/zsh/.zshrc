@@ -6,7 +6,10 @@ ZSH_THEME="bullet-train"
 
 # Plugins
 plugins=(
-  git
+  sudo
+  docker
+  svn
+  gitfast
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -16,6 +19,9 @@ source $ZSH/oh-my-zsh.sh
 alias py="python"
 alias py2="python2"
 alias py3="python3"
+alias ipy="ipython"
+alias ipy2="ipython2"
+alias ipy3="ipython3"
 
 # Git alias
 function gita () {
@@ -62,7 +68,7 @@ export JAVA_BIN=$JAVA_HOME/bin
 
 # Scala
 export SBT_HOME=$LOCAL_USR/sbt
-export SBT_HOME=$SBT_HOME/bin
+export SBT_BIN=$SBT_HOME/bin
 export SCALA_HOME=$LOCAL_USR/scala
 export SCALA_BIN=$SCALA_HOME/bin
 
