@@ -1,4 +1,4 @@
-export ZSH="/home/iamtongsu/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # My own setting, attach to the end of .zshrc under home folder
 # ZSH theme
@@ -44,6 +44,7 @@ alias svnc="svn commit -m"
 alias svnd="svn diff"
 alias svnu="svn update"
 alias svns="svn status"
+alias svnr="svn revert"
 
 # Source alias
 alias sa="source activate"
