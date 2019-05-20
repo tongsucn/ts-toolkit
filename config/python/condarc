@@ -1,0 +1,3 @@
+show_channel_urls: true
+allow_other_channels: true
+use_pip: true

@@ -1,24 +1,39 @@
 #!/bin/bash
 
-set -e
-
-VER=v0.3.4
+# Set internal variables.
+# NeoVim executable.
+VER=v0.3.5
 NVIM_URL=https://github.com/neovim/neovim/releases/download/$VER/nvim.appimage
 INSTALL_TARGET=$LOCAL_BIN/nvim
-DIR_CURR=`dirname $0`
+
+# Installation-related directory.
+DIR_CURR=$(dirname $0)
 NVIM_CFG=$HOME/.config/nvim
 NVIM_CACHE=$NVIM_CFG/cache
 NVIM_BUNDLE=$NVIM_CFG/bundle
 NVIM_COLORS=$NVIM_CFG/colors
 
 # Install dependencies.
-sudo apt update && sudo apt upgrade
-sudo apt install python-dev python3-dev ruby-dev lua5.1 liblua5.1-dev luajit git
+# Check OS version.
+IS_UBUNTU=$(cat /etc/os-release | grep -i centos)
+if [[ -z $IS_UBUNTU ]]; then
+    sudo yum clean all && sudo yum update
+    sudp yum install lua.x86_64 lua-devel luajit luajit-devel \
+        python-devel python3 python3-devel ruby ruby-devel \
+        python34-pip.noarch python-pip.noarch
+else
+    sudo apt update && sudo apt upgrade
+    sudo apt install python-dev python3-dev python-pip python3-pip ruby-dev \
+        lua5.1 liblua5.1-dev luajit git
+fi
 
-# Download latest NeoVim.
+sudo pip2 install neovim && sudo pip3 install neovim
+
+# Download NeoVim.
 wget $NVIM_URL -O $INSTALL_TARGET
+chmod +x $INSTALL_TARGET
 
-# Install configuration.
+# Setup directory and install configuration.
 mkdir -p $NVIM_CACHE/backup $NVIM_CACHE/swap $NVIM_CACHE/undo $NVIM_BUNDLE \
     $NVIM_CACHE/views
 cp $DIR_CURR/init.vim $NVIM_CFG

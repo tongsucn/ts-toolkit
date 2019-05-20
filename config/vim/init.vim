@@ -240,7 +240,7 @@ if isdirectory(expand("~/.config/nvim/bundle/ale/"))
         \ 'proto': ['proto-gen-lint'],
         \ 'go': ['gofmt', 'golint', 'go vet'],
         \ 'sh': ['shellcheck', 'shfmt'],
-        \ 'scala': ['fsc', 'scalac', 'scalafmt', 'scalastyle'],
+        \ 'scala': ['fsc', 'scalac', 'scalafmt'],
         \ }
     " Set fixer.
     let g:ale_fixers = {
