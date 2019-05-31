@@ -1,2 +1,5 @@
-The file `bullet-train.zsh-theme` is created by
-[Caio Gondim](https://github.com/caiogondim/bullet-train.zsh).
+Use following command to install Powerlevel 10K.
+
+```bash
+git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+```
