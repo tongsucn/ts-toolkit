@@ -43,6 +43,8 @@ Plugin 'vim-scripts/restore_view.vim' " Restoring cursor position after restart.
 " AutoComplete.
 Plugin 'Valloric/YouCompleteMe'  " The famous YouCompleteMe plugin.
 Plugin 'zxqfl/tabnine-vim'       " TabNine, based on YouCompleteMe, blur match.
+Plugin 'honza/vim-snippets'      " Pre-defined snippets.
+Plugin 'SirVer/ultisnips'        " Snippets.
 
 " Syntax checker.
 Plugin 'w0rp/ale'  " ALE linter framework.
@@ -338,6 +340,16 @@ if isdirectory(expand("~/.config/nvim/bundle/vim-airline-themes/"))
     " Show ALE linter messages.
     let g:airline#extensions#ale#enabled = 1
 endif
+
+" Snippets
+" Rule directory.
+"let g:UltiSnipsSnippetsDir = [$HOME . '/.config/VimUltiSnips']
+let g:UltiSnipsSnippetDirectories = [$HOME . '/.config/VimUltiSnips']
+let g:UltiSnipsExpandTrigger = '<c-j>'
+let g:UltiSnipsJumpForwardTrigger = '<c-b>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-z>'
+" Split window instead of directly open the configuration file.
+let g:UltiSnipsEditSplit="vertical"
 
 "_______________________________________________________________________________
 " Configurations for all plugins, END.
