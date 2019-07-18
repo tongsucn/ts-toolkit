@@ -39,6 +39,7 @@ Plugin 'ctrlpvim/ctrlp.vim'           " Ctrl+P to find files etc.
 Plugin 'tacahiroy/ctrlp-funky'        " Enhancement for ctrlp.
 Plugin 'easymotion/vim-easymotion'    " Fast cursor movements.
 Plugin 'vim-scripts/restore_view.vim' " Restoring cursor position after restart.
+Plugin 'tpope/vim-fugitive'           " Git tool.
 
 " AutoComplete.
 Plugin 'Valloric/YouCompleteMe'  " The famous YouCompleteMe plugin.
@@ -282,6 +283,15 @@ set tags=./tags;/,~/.config/nvim/cache/vimtags
 let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
 if gitroot != ''
     let &tags = &tags . ',' . gitroot . '/.git/tags'
+endif
+
+" Git tools
+if isdirectory(expand("~/.config/nvim/bundle/vim-fugitive/"))
+    nnoremap <silent> <leader>gs :Gstatus<CR>
+    nnoremap <silent> <leader>gd :Gdiff<CR>
+    nnoremap <silent> <leader>gb :Gblame<CR>
+    nnoremap <silent> <leader>gc :Gcommit<CR>
+    nnoremap <silent> <leader>ga :Gwrite<CR>
 endif
 
 " Ctrlp
